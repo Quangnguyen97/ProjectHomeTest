@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Account {
-    private long UserId;
+    private @GeneratedValue long UserId;
     private @Id @GeneratedValue int AccountNumber;
     private double Balance;
 
