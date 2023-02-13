@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.hometest.Module.*;
 
-@Service("UserServiceImpl")
+@Service
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
