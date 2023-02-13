@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.hometest.Module.*;
 
-@Service
+@Service("AccountServiceImpl")
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
