@@ -1,7 +1,8 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
-        "hometest"
+        "hometest",
+        "Userid"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"
 }
