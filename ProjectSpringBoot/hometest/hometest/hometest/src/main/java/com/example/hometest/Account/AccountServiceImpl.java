@@ -15,9 +15,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAllAccounts(Iterable<Long> UserId) {
+    public List<Account> getAllAccounts(long UserId) {
         try {
-            List<Account> ListAccount = accountRepository.findAllById(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(UserId);
             if (ListAccount.isEmpty()) {
                 new ResourceNotFoundException("ListAccount", "UserId", UserId);
                 return null;
@@ -31,9 +31,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByNumber(Iterable<Long> UserId, int AccountNumber) {
+    public Account getAccountByNumber(long UserId, int AccountNumber) {
         try {
-            List<Account> ListAccount = accountRepository.findAllById(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(UserId);
             if (ListAccount.isEmpty()) {
                 new ResourceNotFoundException("ListAccount", "UserId", UserId);
                 return null;
@@ -51,14 +51,14 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveAccount(Iterable<Long> UserId, Account account) {
+    public Account saveAccount(long UserId, Account account) {
         try {
             if (UserId != account.getUserId()) {
                 new ResourceNotFoundException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", UserId));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findAllById(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(UserId);
             if (ListAccount.isEmpty()) {
                 new ResourceNotFoundException("ListAccount", "UserId", UserId);
                 return null;
@@ -79,7 +79,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account updateAccount(Iterable<Long> UserId, Account account, int AccountNumber) {
+    public Account updateAccount(long UserId, Account account, int AccountNumber) {
         try {
             if (UserId != account.getUserId()) {
                 new ResourceNotFoundException(
@@ -91,7 +91,7 @@ public class AccountServiceImpl implements AccountService {
                         String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", AccountNumber));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findAllById(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(UserId);
             if (ListAccount.isEmpty()) {
                 new ResourceNotFoundException("ListAccount", "UserId", UserId);
                 return null;
@@ -114,9 +114,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteAccount(Iterable<Long> UserId, int AccountNumber) {
+    public void deleteAccount(long UserId, int AccountNumber) {
         try {
-            List<Account> ListAccount = accountRepository.findAllById(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(UserId);
             if (ListAccount.isEmpty()) {
                 new ResourceNotFoundException("ListAccount", "UserId", UserId);
             } else {

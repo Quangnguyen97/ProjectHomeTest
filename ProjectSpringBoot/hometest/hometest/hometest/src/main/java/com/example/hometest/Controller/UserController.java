@@ -39,9 +39,9 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserByUserId(@PathVariable(name = "id") Long id) {
-        User user = userServiceImpl.getUserByUserId(id);
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUserByUserId(@PathVariable(name = "userId") Long userId) {
+        User user = userServiceImpl.getUserByUserId(userId);
         // convert entity to DTO
         UserDto userResponse = modelMapper.map(user, UserDto.class);
         return ResponseEntity.ok().body(userResponse);
@@ -59,19 +59,20 @@ public class UserController {
 
     // change the request for DTO
     // change the response for DTO
-    @PutMapping("/{id}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable long id, @RequestBody UserDto userDto) {
+    @PutMapping("/{userId}")
+    public ResponseEntity<UserDto> updateUser(@PathVariable(name = "userId") Long userId,
+            @RequestBody UserDto userDto) {
         // convert DTO to Entity
         User userRequest = modelMapper.map(userDto, User.class);
-        User user = userServiceImpl.updateUser(userRequest, id);
+        User user = userServiceImpl.updateUser(userRequest, userId);
         // entity to DTO
         UserDto userResponse = modelMapper.map(user, UserDto.class);
         return ResponseEntity.ok().body(userResponse);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "id") Long id) {
-        userServiceImpl.deleteUser(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable(name = "userId") Long userId) {
+        userServiceImpl.deleteUser(userId);
         return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
     }
 }

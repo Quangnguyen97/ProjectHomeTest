@@ -2,6 +2,7 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
         "hometest",
+        "mapstruct",
         "Userid"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"

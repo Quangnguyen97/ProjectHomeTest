@@ -20,6 +20,10 @@ public class HometestApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.run(HometestApplication.class, args);
+		try {
+			SpringApplication.run(HometestApplication.class, args);
+		} catch (Exception e) {
+			new Exception(e);
+		}
 	}
 }

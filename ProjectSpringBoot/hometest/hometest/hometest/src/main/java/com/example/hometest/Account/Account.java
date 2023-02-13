@@ -7,22 +7,22 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Account {
-    private Iterable<Long> UserId;
+    private long UserId;
     private @Id @GeneratedValue int AccountNumber;
     private double Balance;
 
-    public Account(Iterable<Long> UserId, int AccountNumber, double Balance) {
+    public Account(long UserId, int AccountNumber, double Balance) {
         super();
         this.UserId = UserId;
         this.AccountNumber = AccountNumber;
         this.Balance = Balance;
     }
 
-    public Iterable<Long> getUserId() {
+    public long getUserId() {
         return UserId;
     }
 
-    public void setUserId(Iterable<Long> UserId) {
+    public void setUserId(long UserId) {
         this.UserId = UserId;
     }
 

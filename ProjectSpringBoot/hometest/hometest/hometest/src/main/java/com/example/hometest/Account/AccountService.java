@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface AccountService {
 
-    List<Account> getAllAccounts(Iterable<Long> UserId);
+    List<Account> getAllAccounts(long UserId);
 
-    Account getAccountByNumber(Iterable<Long> UserId, int AccountNumber);
+    Account getAccountByNumber(long UserId, int AccountNumber);
 
-    Account saveAccount(Iterable<Long> UserId, Account account);
+    Account saveAccount(long UserId, Account account);
 
-    Account updateAccount(Iterable<Long> UserId, Account account, int AccountNumber);
+    Account updateAccount(long UserId, Account account, int AccountNumber);
 
-    void deleteAccount(Iterable<Long> UserId, int AccountNumber);
+    void deleteAccount(long UserId, int AccountNumber);
 }

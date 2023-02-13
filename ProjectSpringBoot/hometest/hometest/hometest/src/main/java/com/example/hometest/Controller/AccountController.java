@@ -32,7 +32,7 @@ public class AccountController {
     }
 
     @GetMapping
-    public List<Account> getAllAccounts(@PathVariable(name = "userId") Iterable<Long> userId) {
+    public List<Account> getAllAccounts(@PathVariable(name = "userId") long userId) {
         return accountServiceImpl.getAllAccounts(userId)
                 .stream()
                 .map(post -> modelMapper.map(post, Account.class))
@@ -40,7 +40,7 @@ public class AccountController {
     }
 
     @GetMapping("/{accountNumber}")
-    public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") Iterable<Long> userId,
+    public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
         // convert entity to DTO
@@ -49,7 +49,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<AccountDto> saveAccount(@PathVariable(name = "userId") Iterable<Long> userId,
+    public ResponseEntity<AccountDto> saveAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto) {
         // convert DTO to entity
         Account accountRequest = modelMapper.map(accountDto, Account.class);
@@ -62,7 +62,7 @@ public class AccountController {
     // change the request for DTO
     // change the response for DTO
     @PutMapping("/{accountNumber}")
-    public ResponseEntity<AccountDto> updateAccount(@PathVariable(name = "userId") Iterable<Long> userId,
+    public ResponseEntity<AccountDto> updateAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
         // convert DTO to Entity
         Account accountRequest = modelMapper.map(accountDto, Account.class);
@@ -73,7 +73,7 @@ public class AccountController {
     }
 
     @DeleteMapping("/{accountNumber}")
-    public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") Iterable<Long> userId,
+    public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         accountServiceImpl.deleteAccount(userId, accountNumber);
         return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
