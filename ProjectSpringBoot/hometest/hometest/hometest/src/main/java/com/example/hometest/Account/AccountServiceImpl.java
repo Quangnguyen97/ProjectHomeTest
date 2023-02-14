@@ -102,7 +102,7 @@ public class AccountServiceImpl implements AccountService {
             } else if (userRepository.findById(UserId) == null) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
-            } else if (accountRepository.findById(account.getAccountNumber()) != null) {
+            } else if (accountRepository.findById(account.getAccountNumber()).isEmpty() == false) {
                 new ResourceNotFoundException(
                         String.format("%s is exists with %s : '%s'", "Account", "AccountNumber",
                                 String.valueOf(account.getAccountNumber())));

@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
             }
 
             // Check data exists
-            if (userRepository.findById(user.getUserId()) != null) {
+            if (userRepository.findById(user.getUserId()).isEmpty() == false) {
                 new ResourceNotFoundException(
                         String.format("%s is exists with %s : '%s'", "User", "UserId",
                                 String.valueOf(user.getUserId())));
