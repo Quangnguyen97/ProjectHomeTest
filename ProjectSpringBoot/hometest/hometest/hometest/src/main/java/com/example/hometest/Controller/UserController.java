@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.User.*;
 
 @RestController
-@RequestMapping("/User")
 public class UserController {
     @Autowired
     private ModelMapper modelMapper;
@@ -31,7 +29,7 @@ public class UserController {
         this.userServiceImpl = userServiceImpl;
     }
 
-    @GetMapping
+    @GetMapping(value = "/user")
     public List<User> getAllUsers() {
         return userServiceImpl.getAllUsers()
                 .stream()
@@ -47,7 +45,7 @@ public class UserController {
         return ResponseEntity.ok().body(userResponse);
     }
 
-    @PostMapping
+    @PostMapping(value = "/user")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
         // convert DTO to entity
         User userRequest = modelMapper.map(userDto, User.class);

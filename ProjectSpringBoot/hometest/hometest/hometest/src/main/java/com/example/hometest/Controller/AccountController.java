@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.Account.*;
 
 @RestController
-@RequestMapping("/User/{userId}/Account")
 public class AccountController {
     @Autowired
     private ModelMapper modelMapper;
@@ -31,7 +29,7 @@ public class AccountController {
         this.accountServiceImpl = accountServiceImpl;
     }
 
-    @GetMapping
+    @GetMapping(value = "/user/{userId}/account")
     public List<Account> getAllAccounts(@PathVariable(name = "userId") long userId) {
         return accountServiceImpl.getAllAccounts(userId)
                 .stream()
@@ -39,7 +37,7 @@ public class AccountController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{accountNumber}")
+    @GetMapping(value = "/user/{userId}/account/{accountNumber}")
     public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
@@ -48,7 +46,7 @@ public class AccountController {
         return ResponseEntity.ok().body(accountResponse);
     }
 
-    @PostMapping
+    @PostMapping(value = "/user/{userId}/account")
     public ResponseEntity<AccountDto> saveAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto) {
         // convert DTO to entity
@@ -61,7 +59,7 @@ public class AccountController {
 
     // change the request for DTO
     // change the response for DTO
-    @PutMapping("/{accountNumber}")
+    @PutMapping(value = "/user/{userId}/account/{accountNumber}")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
         // convert DTO to Entity
@@ -72,7 +70,7 @@ public class AccountController {
         return ResponseEntity.ok().body(accountResponse);
     }
 
-    @DeleteMapping("/{accountNumber}")
+    @DeleteMapping(value = "/user/{userId}/account/{accountNumber}")
     public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         accountServiceImpl.deleteAccount(userId, accountNumber);
