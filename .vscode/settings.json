@@ -2,9 +2,11 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
         "Authen",
+        "Configurer",
         "getaccount",
         "getuser",
         "hometest",
+        "javaconfig",
         "mapstruct",
         "quang",
         "Servlet",
