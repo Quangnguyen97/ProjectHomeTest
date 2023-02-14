@@ -36,10 +36,10 @@ public class MyBasicAuthWebSecurityConfiguration {
         http.httpBasic()
                 .and()
                 .authorizeRequests()
-                .requestMatchers("/**")
+                .anyRequest()
                 .hasRole("ADMIN")
                 .and()
-                .formLogin()
+                .formLogin().permitAll()
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint);

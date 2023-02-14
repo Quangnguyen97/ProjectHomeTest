@@ -29,7 +29,7 @@ public class UserController {
         this.userServiceImpl = userServiceImpl;
     }
 
-    @GetMapping(value = "/user")
+    @GetMapping("/user")
     public List<User> getAllUsers() {
         List<User> ListUser = userServiceImpl.getAllUsers()
                 .stream()
@@ -42,7 +42,7 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/user/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable(name = "userId") Long userId) {
         User user = userServiceImpl.getUserByUserId(userId);
 
@@ -51,11 +51,11 @@ public class UserController {
             UserDto userResponse = modelMapper.map(user, UserDto.class);
             return ResponseEntity.ok().body(userResponse);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping("/user")
     public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
         // convert DTO to entity
         User userRequest = modelMapper.map(userDto, User.class);
@@ -72,7 +72,7 @@ public class UserController {
 
     // change the request for DTO
     // change the response for DTO
-    @PutMapping(value = "/user/{userId}")
+    @PutMapping("/user/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable(name = "userId") Long userId,
             @RequestBody UserDto userDto) {
         // convert DTO to Entity
@@ -88,7 +88,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/user/{userId}")
+    @DeleteMapping("/user/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "userId") Long userId) {
         if (userServiceImpl.deleteUser(userId)) {
             return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);

@@ -29,7 +29,7 @@ public class AccountController {
         this.accountServiceImpl = accountServiceImpl;
     }
 
-    @GetMapping(value = "/user/{userId}/account")
+    @GetMapping("/user/{userId}/account")
     public List<Account> getAllAccounts(@PathVariable(name = "userId") long userId) {
         List<Account> ListAccount = accountServiceImpl.getAllAccounts(userId)
                 .stream()
@@ -42,7 +42,7 @@ public class AccountController {
         }
     }
 
-    @GetMapping(value = "/user/{userId}/account/{accountNumber}")
+    @GetMapping("/user/{userId}/account/{accountNumber}")
     public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
@@ -52,11 +52,11 @@ public class AccountController {
             AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
             return ResponseEntity.ok().body(accountResponse);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.notFound().build();
         }
     }
 
-    @PostMapping(value = "/user/{userId}/account")
+    @PostMapping("/user/{userId}/account")
     public ResponseEntity<AccountDto> saveAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto) {
         // convert DTO to entity
@@ -74,7 +74,7 @@ public class AccountController {
 
     // change the request for DTO
     // change the response for DTO
-    @PutMapping(value = "/user/{userId}/account/{accountNumber}")
+    @PutMapping("/user/{userId}/account/{accountNumber}")
     public ResponseEntity<AccountDto> updateAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
         // convert DTO to Entity
@@ -90,7 +90,7 @@ public class AccountController {
         }
     }
 
-    @DeleteMapping(value = "/user/{userId}/account/{accountNumber}")
+    @DeleteMapping("/user/{userId}/account/{accountNumber}")
     public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         if (accountServiceImpl.deleteAccount(userId, accountNumber)) {
