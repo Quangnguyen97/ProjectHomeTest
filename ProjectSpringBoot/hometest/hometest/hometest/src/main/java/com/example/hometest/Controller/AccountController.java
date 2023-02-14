@@ -31,19 +31,29 @@ public class AccountController {
 
     @GetMapping(value = "/user/{userId}/account")
     public List<Account> getAllAccounts(@PathVariable(name = "userId") long userId) {
-        return accountServiceImpl.getAllAccounts(userId)
+        List<Account> ListAccount = accountServiceImpl.getAllAccounts(userId)
                 .stream()
                 .map(post -> modelMapper.map(post, Account.class))
                 .collect(Collectors.toList());
+        if (ListAccount.isEmpty()) {
+            return null;
+        } else {
+            return ListAccount;
+        }
     }
 
     @GetMapping(value = "/user/{userId}/account/{accountNumber}")
     public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
-        // convert entity to DTO
-        AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-        return ResponseEntity.ok().body(accountResponse);
+
+        if (account != null) {
+            // convert entity to DTO
+            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
+            return ResponseEntity.ok().body(accountResponse);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PostMapping(value = "/user/{userId}/account")
@@ -52,9 +62,14 @@ public class AccountController {
         // convert DTO to entity
         Account accountRequest = modelMapper.map(accountDto, Account.class);
         Account account = accountServiceImpl.saveAccount(userId, accountRequest);
-        // convert entity to DTO
-        AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-        return new ResponseEntity<AccountDto>(accountResponse, HttpStatus.CREATED);
+
+        if (account != null) {
+            // convert entity to DTO
+            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
+            return new ResponseEntity<AccountDto>(accountResponse, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     // change the request for DTO
@@ -65,9 +80,14 @@ public class AccountController {
         // convert DTO to Entity
         Account accountRequest = modelMapper.map(accountDto, Account.class);
         Account account = accountServiceImpl.updateAccount(userId, accountRequest, accountNumber);
-        // entity to DTO
-        AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-        return ResponseEntity.ok().body(accountResponse);
+
+        if (account != null) {
+            // entity to DTO
+            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
+            return ResponseEntity.ok().body(accountResponse);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @DeleteMapping(value = "/user/{userId}/account/{accountNumber}")
