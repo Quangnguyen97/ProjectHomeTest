@@ -94,9 +94,9 @@ public class AccountController {
     public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
         if (accountServiceImpl.deleteAccount(userId, accountNumber)) {
-            return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+            return new ResponseEntity<String>("Account deleted successfully!.", HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("User deleted failed!.", HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<String>("Account deleted failed!.", HttpStatus.EXPECTATION_FAILED);
         }
     }
 }

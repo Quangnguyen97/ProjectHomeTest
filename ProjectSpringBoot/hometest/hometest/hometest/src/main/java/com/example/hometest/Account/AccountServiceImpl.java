@@ -83,6 +83,14 @@ public class AccountServiceImpl implements AccountService {
                 new ResourceNotFoundException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
+            } else if (String.valueOf(account.getAccountNumber()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
+                return null;
+            } else if (String.valueOf(account.getBalance()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "Balance", "null"));
+                return null;
             }
 
             // Check data exists
@@ -128,15 +136,15 @@ public class AccountServiceImpl implements AccountService {
                 new ResourceNotFoundException(
                         String.format("%s is error param with %s : '%s'", "Account", "Balance", "null"));
                 return null;
-            } else if (AccountNumber != account.getAccountNumber()) {
+            }
+
+            // Check data exists
+            if (AccountNumber != account.getAccountNumber()) {
                 new ResourceNotFoundException(
                         String.format("%s is different data with %s : '%s'", "Account", "AccountNumber",
                                 String.valueOf(AccountNumber) + " - " + String.valueOf(account.getAccountNumber())));
                 return null;
-            }
-
-            // Check data exists
-            if (userRepository.findById(UserId) == null) {
+            } else if (userRepository.findById(UserId) == null) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {

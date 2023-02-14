@@ -31,18 +31,28 @@ public class UserController {
 
     @GetMapping(value = "/user")
     public List<User> getAllUsers() {
-        return userServiceImpl.getAllUsers()
+        List<User> ListUser = userServiceImpl.getAllUsers()
                 .stream()
                 .map(post -> modelMapper.map(post, User.class))
                 .collect(Collectors.toList());
+        if (ListUser.isEmpty()) {
+            return null;
+        } else {
+            return ListUser;
+        }
     }
 
     @GetMapping(value = "/user/{userId}")
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable(name = "userId") Long userId) {
         User user = userServiceImpl.getUserByUserId(userId);
-        // convert entity to DTO
-        UserDto userResponse = modelMapper.map(user, UserDto.class);
-        return ResponseEntity.ok().body(userResponse);
+
+        if (user != null) {
+            // convert entity to DTO
+            UserDto userResponse = modelMapper.map(user, UserDto.class);
+            return ResponseEntity.ok().body(userResponse);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @PostMapping(value = "/user")
@@ -50,9 +60,14 @@ public class UserController {
         // convert DTO to entity
         User userRequest = modelMapper.map(userDto, User.class);
         User user = userServiceImpl.saveUser(userRequest);
-        // convert entity to DTO
-        UserDto userResponse = modelMapper.map(user, UserDto.class);
-        return new ResponseEntity<UserDto>(userResponse, HttpStatus.CREATED);
+
+        if (user != null) {
+            // convert entity to DTO
+            UserDto userResponse = modelMapper.map(user, UserDto.class);
+            return new ResponseEntity<UserDto>(userResponse, HttpStatus.CREATED);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     // change the request for DTO
@@ -63,14 +78,22 @@ public class UserController {
         // convert DTO to Entity
         User userRequest = modelMapper.map(userDto, User.class);
         User user = userServiceImpl.updateUser(userRequest, userId);
-        // entity to DTO
-        UserDto userResponse = modelMapper.map(user, UserDto.class);
-        return ResponseEntity.ok().body(userResponse);
+
+        if (user != null) {
+            // entity to DTO
+            UserDto userResponse = modelMapper.map(user, UserDto.class);
+            return ResponseEntity.ok().body(userResponse);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
     @DeleteMapping(value = "/user/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable(name = "userId") Long userId) {
-        userServiceImpl.deleteUser(userId);
-        return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+        if (userServiceImpl.deleteUser(userId)) {
+            return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("User deleted failed!.", HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }

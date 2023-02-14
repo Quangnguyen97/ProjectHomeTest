@@ -25,10 +25,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserId(long userId) {
+    public User getUserByUserId(long UserId) {
         try {
-            return userRepository.findById(userId).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "userId", userId));
+            // Check error param
+            if (String.valueOf(UserId) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "UserId", "null"));
+                return null;
+            }
+
+            // Check data exists
+            if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return null;
+            }
+
+            return userRepository.findById(UserId).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "userId", UserId));
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
             return null;
@@ -38,6 +51,37 @@ public class UserServiceImpl implements UserService {
     @Override
     public User saveUser(User user) {
         try {
+            // Check error param
+            if (user == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "User", "null"));
+                return null;
+            } else if (String.valueOf(user.getUserId()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "UserId", "null"));
+                return null;
+            } else if (String.valueOf(user.getFullName()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "FullName", "null"));
+                return null;
+            } else if (String.valueOf(user.getPassword()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "Password", "null"));
+                return null;
+            } else if (String.valueOf(user.getNotificationToken()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "NotificationToken", "null"));
+                return null;
+            }
+
+            // Check data exists
+            if (userRepository.findById(user.getUserId()) != null) {
+                new ResourceNotFoundException(
+                        String.format("%s is exists with %s : '%s'", "User", "UserId",
+                                String.valueOf(user.getUserId())));
+                return null;
+            }
+
             return userRepository.save(user);
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
@@ -46,11 +90,44 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User user, long userId) {
+    public User updateUser(User user, long UserId) {
         try {
-            User existingUser = userRepository.findById(userId).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "Userid", userId));
+            // Check error param
+            if (user == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "User", "null"));
+                return null;
+            } else if (String.valueOf(UserId) == null || String.valueOf(user.getUserId()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "UserId", "null"));
+                return null;
+            } else if (String.valueOf(user.getFullName()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "FullName", "null"));
+                return null;
+            } else if (String.valueOf(user.getPassword()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "Password", "null"));
+                return null;
+            } else if (String.valueOf(user.getNotificationToken()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "User", "NotificationToken", "null"));
+                return null;
+            }
 
+            // Check data exists
+            if (UserId != user.getUserId()) {
+                new ResourceNotFoundException(
+                        String.format("%s is different data with %s : '%s'", "User", "UserId",
+                                String.valueOf(UserId) + " - " + String.valueOf(user.getUserId())));
+                return null;
+            } else if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return null;
+            }
+
+            User existingUser = userRepository.findById(UserId).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "userId", UserId));
             existingUser.setFullName(user.getFullName());
             existingUser.setPassword(user.getPassword());
             existingUser.setNotificationToken(user.getNotificationToken());
@@ -63,14 +140,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long userId) {
+    public boolean deleteUser(long UserId) {
         try {
-            userRepository.findById(userId).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "Userid", userId));
-            userRepository.deleteById(userId);
+            // Check error param
+            if (String.valueOf(UserId) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
+                return false;
+            }
 
+            // Check data exists
+            if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return false;
+            }
+
+            userRepository.deleteById(UserId);
+            return true;
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
+            return false;
         }
     }
 }
