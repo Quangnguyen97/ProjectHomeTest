@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -18,10 +20,11 @@ public class MyBasicAuthWebSecurityConfiguration {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder authentication) throws Exception {
         try {
+            PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
             authentication
                     .inMemoryAuthentication()
                     .withUser("admin")
-                    .password("123456")
+                    .password(encoder.encode("123456"))
                     .authorities("ROLE_ADMIN");
         } catch (Exception e) {
             new Exception(e);
@@ -30,19 +33,16 @@ public class MyBasicAuthWebSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        try {
-            http.authorizeRequests()
-                    .requestMatchers("/")
-                    .permitAll()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
-                    .httpBasic()
-                    .authenticationEntryPoint(authenticationEntryPoint);
-            return http.build();
-        } catch (Exception e) {
-            new Exception(e);
-            return http.build();
-        }
+        http.httpBasic()
+                .and()
+                .authorizeRequests()
+                .requestMatchers("/**")
+                .hasRole("ADMIN")
+                .and()
+                .formLogin()
+                .and()
+                .httpBasic()
+                .authenticationEntryPoint(authenticationEntryPoint);
+        return http.build();
     }
 }
