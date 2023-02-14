@@ -16,49 +16,49 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class User {
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long UserId;
-    private String FullName;
-    private String Password;
-    private String NotificationToken;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long userId;
+    private String fullName;
+    private String password;
+    private String notificationToken;
 
-    public User(long UserId, String FullName, String Password, String NotificationToken) {
+    public User(long userId, String fullName, String password, String notificationToken) {
         super();
-        this.UserId = UserId;
-        this.FullName = FullName;
-        this.Password = Password;
-        this.NotificationToken = NotificationToken;
+        this.userId = userId;
+        this.fullName = fullName;
+        this.password = password;
+        this.notificationToken = notificationToken;
     }
 
     public long getUserId() {
-        return UserId;
+        return userId;
     }
 
-    public void setUserId(long UserId) {
-        this.UserId = UserId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public String getFullName() {
-        return FullName;
+        return fullName;
     }
 
-    public void setFullName(String FullName) {
-        this.FullName = FullName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
-    public void setPassword(String Password) {
-        this.Password = Password;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNotificationToken() {
-        return NotificationToken;
+        return notificationToken;
     }
 
-    public void setNotificationToken(String NotificationToken) {
-        this.NotificationToken = NotificationToken;
+    public void setNotificationToken(String notificationToken) {
+        this.notificationToken = notificationToken;
     }
 
     @Override
@@ -68,11 +68,11 @@ public class User {
         if (!(object instanceof User))
             return false;
         User user = (User) object;
-        return Objects.equals(this.UserId, user.UserId);
+        return Objects.equals(this.userId, user.userId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.UserId);
+        return Objects.hash(this.userId);
     }
 }

@@ -1,8 +1,11 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
+        "getaccount",
+        "getuser",
         "hometest",
         "mapstruct",
+        "setuser",
         "Userid"
     ],
     "java.configuration.updateBuildConfiguration": "automatic"

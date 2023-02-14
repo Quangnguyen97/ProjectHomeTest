@@ -6,11 +6,11 @@ public interface UserService {
 
     List<User> getAllUsers();
 
-    User getUserByUserId(long UserId);
+    User getUserByUserId(long userId);
 
-    User saveUser(User User);
+    User saveUser(User user);
 
-    User updateUser(User User, long UserId);
+    User updateUser(User user, long userId);
 
-    void deleteUser(long UserId);
+    void deleteUser(long userId);
 }

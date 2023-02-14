@@ -25,10 +25,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserId(long Userid) {
+    public User getUserByUserId(long userId) {
         try {
-            return userRepository.findById(Userid).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "Userid", Userid));
+            return userRepository.findById(userId).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "Userid", userId));
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
             return null;
@@ -36,9 +36,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User User) {
+    public User saveUser(User user) {
         try {
-            return userRepository.save(User);
+            return userRepository.save(user);
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
             return null;
@@ -46,14 +46,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(User User, long Userid) {
+    public User updateUser(User user, long userId) {
         try {
-            User existingUser = userRepository.findById(Userid).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "Userid", Userid));
+            User existingUser = userRepository.findById(userId).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "Userid", userId));
 
-            existingUser.setFullName(User.getFullName());
-            existingUser.setPassword(User.getPassword());
-            existingUser.setNotificationToken(User.getNotificationToken());
+            existingUser.setFullName(user.getFullName());
+            existingUser.setPassword(user.getPassword());
+            existingUser.setNotificationToken(user.getNotificationToken());
             userRepository.save(existingUser);
             return existingUser;
         } catch (Exception e) {
@@ -63,11 +63,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(long Userid) {
+    public void deleteUser(long userId) {
         try {
-            userRepository.findById(Userid).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "Userid", Userid));
-            userRepository.deleteById(Userid);
+            userRepository.findById(userId).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "Userid", userId));
+            userRepository.deleteById(userId);
 
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);

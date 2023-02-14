@@ -16,39 +16,39 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Account {
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long UserId;
-    private @GeneratedValue int AccountNumber;
-    private double Balance;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long userId;
+    private @GeneratedValue int accountNumber;
+    private double balance;
 
-    public Account(long UserId, int AccountNumber, double Balance) {
+    public Account(long userId, int accountNumber, double balance) {
         super();
-        this.UserId = UserId;
-        this.AccountNumber = AccountNumber;
-        this.Balance = Balance;
+        this.userId = userId;
+        this.accountNumber = accountNumber;
+        this.balance = balance;
     }
 
     public long getUserId() {
-        return UserId;
+        return userId;
     }
 
-    public void setUserId(long UserId) {
-        this.UserId = UserId;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getAccountNumber() {
-        return AccountNumber;
+        return accountNumber;
     }
 
-    public void setAccountNumber(int AccountNumber) {
-        this.AccountNumber = AccountNumber;
+    public void setAccountNumber(int accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public double getBalance() {
-        return Balance;
+        return balance;
     }
 
-    public void setBalance(double Balance) {
-        this.Balance = Balance;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
     @Override
@@ -58,11 +58,11 @@ public class Account {
         if (!(object instanceof Account))
             return false;
         Account account = (Account) object;
-        return Objects.equals(this.AccountNumber, account.AccountNumber);
+        return Objects.equals(this.accountNumber, account.accountNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.AccountNumber);
+        return Objects.hash(this.accountNumber);
     }
 }

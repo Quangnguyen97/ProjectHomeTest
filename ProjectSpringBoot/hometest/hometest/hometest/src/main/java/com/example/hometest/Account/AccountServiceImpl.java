@@ -15,11 +15,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAllAccounts(long UserId) {
+    public List<Account> getAllAccounts(long userId) {
         try {
-            List<Account> ListAccount = accountRepository.findByUserId(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(userId);
             if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", UserId);
+                new ResourceNotFoundException("ListAccount", "UserId", userId);
                 return null;
             } else {
                 return ListAccount;
@@ -31,17 +31,17 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByNumber(long UserId, int AccountNumber) {
+    public Account getAccountByNumber(long userId, int accountNumber) {
         try {
-            List<Account> ListAccount = accountRepository.findByUserId(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(userId);
             if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", UserId);
+                new ResourceNotFoundException("ListAccount", "UserId", userId);
                 return null;
             } else {
-                if (String.valueOf(AccountNumber) == null) {
+                if (String.valueOf(accountNumber) == null) {
                     return null;
                 } else {
-                    return accountRepository.findByAccountNumber(AccountNumber);
+                    return accountRepository.findByAccountNumber(accountNumber);
                 }
             }
         } catch (Exception e) {
@@ -51,16 +51,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveAccount(long UserId, Account account) {
+    public Account saveAccount(long userId, Account account) {
         try {
-            if (UserId != account.getUserId()) {
+            if (userId != account.getUserId()) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "UserId", UserId));
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", userId));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findByUserId(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(userId);
             if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", UserId);
+                new ResourceNotFoundException("ListAccount", "UserId", userId);
                 return null;
             } else {
                 if (accountRepository.findByAccountNumber(account.getAccountNumber()) == null) {
@@ -79,28 +79,28 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account updateAccount(long UserId, Account account, int AccountNumber) {
+    public Account updateAccount(long userId, Account account, int accountNumber) {
         try {
-            if (UserId != account.getUserId()) {
+            if (userId != account.getUserId()) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "UserId", UserId));
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", userId));
                 return null;
             }
-            if (AccountNumber != account.getAccountNumber()) {
+            if (accountNumber != account.getAccountNumber()) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", AccountNumber));
+                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", accountNumber));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findByUserId(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(userId);
             if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", UserId);
+                new ResourceNotFoundException("ListAccount", "UserId", userId);
                 return null;
             } else {
                 if (accountRepository.findByAccountNumber(account.getAccountNumber()) == null) {
-                    new ResourceNotFoundException("Account", "AccountNumber", AccountNumber);
+                    new ResourceNotFoundException("Account", "AccountNumber", accountNumber);
                     return null;
                 } else {
-                    Account existingAccount = accountRepository.findByAccountNumber(AccountNumber);
+                    Account existingAccount = accountRepository.findByAccountNumber(accountNumber);
                     existingAccount.setAccountNumber(account.getAccountNumber());
                     existingAccount.setBalance(account.getBalance());
                     accountRepository.save(existingAccount);
@@ -114,16 +114,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteAccount(long UserId, int AccountNumber) {
+    public void deleteAccount(long userId, int accountNumber) {
         try {
-            List<Account> ListAccount = accountRepository.findByUserId(UserId);
+            List<Account> ListAccount = accountRepository.findByUserId(userId);
             if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", UserId);
+                new ResourceNotFoundException("ListAccount", "UserId", userId);
             } else {
-                if (accountRepository.findByAccountNumber(AccountNumber) == null) {
-                    new ResourceNotFoundException("Account", "AccountNumber", AccountNumber);
+                if (accountRepository.findByAccountNumber(accountNumber) == null) {
+                    new ResourceNotFoundException("Account", "AccountNumber", accountNumber);
                 } else {
-                    accountRepository.deleteByAccountNumber(AccountNumber);
+                    accountRepository.deleteByAccountNumber(accountNumber);
                 }
             }
         } catch (Exception e) {
