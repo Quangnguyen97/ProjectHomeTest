@@ -73,7 +73,10 @@ public class AccountController {
     @DeleteMapping(value = "/user/{userId}/account/{accountNumber}")
     public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
-        accountServiceImpl.deleteAccount(userId, accountNumber);
-        return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+        if (accountServiceImpl.deleteAccount(userId, accountNumber)) {
+            return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("User deleted failed!.", HttpStatus.EXPECTATION_FAILED);
+        }
     }
 }

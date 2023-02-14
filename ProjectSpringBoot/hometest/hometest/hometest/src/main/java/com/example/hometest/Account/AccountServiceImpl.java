@@ -3,131 +3,188 @@ package com.example.hometest.Account;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.hometest.Module.*;
+import com.example.hometest.User.*;
 
 @Service
 public class AccountServiceImpl implements AccountService {
 
     private AccountRepository accountRepository;
+    private UserRepository userRepository;
 
-    public AccountServiceImpl(AccountRepository accountRepository) {
+    public AccountServiceImpl(UserRepository userRepository, AccountRepository accountRepository) {
         super();
+        this.userRepository = userRepository;
         this.accountRepository = accountRepository;
+
     }
 
     @Override
-    public List<Account> getAllAccounts(long userId) {
+    public List<Account> getAllAccounts(long UserId) {
         try {
-            List<Account> ListAccount = accountRepository.findByUserId(userId);
-            if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", userId);
-                return null;
-            } else {
-                return ListAccount;
-            }
-        } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", e);
-            return null;
-        }
-    }
-
-    @Override
-    public Account getAccountByNumber(long userId, int accountNumber) {
-        try {
-            List<Account> ListAccount = accountRepository.findByUserId(userId);
-            if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", userId);
-                return null;
-            } else {
-                if (String.valueOf(accountNumber) == null) {
-                    return null;
-                } else {
-                    return accountRepository.findByAccountNumber(accountNumber);
-                }
-            }
-        } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", e);
-            return null;
-        }
-    }
-
-    @Override
-    public Account saveAccount(long userId, Account account) {
-        try {
-            if (userId != account.getUserId()) {
+            // Check error param
+            if (String.valueOf(UserId) == null) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "UserId", userId));
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findByUserId(userId);
-            if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", userId);
+
+            // Check data exists
+            if (accountRepository.findByUserId(UserId).isEmpty()) {
+                new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
-            } else {
-                if (accountRepository.findByAccountNumber(account.getAccountNumber()) == null) {
-                    return accountRepository.save(account);
-                } else {
-                    new ResourceNotFoundException(
-                            String.format("%s is exists with %s : '%s'", "Account", "AccountNumber",
-                                    account.getAccountNumber()));
-                    return null;
-                }
             }
+
+            return accountRepository.findByUserId(UserId);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", e);
+            new ResourceErrorException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
 
     @Override
-    public Account updateAccount(long userId, Account account, int accountNumber) {
+    public Account getAccountByNumber(long UserId, long AccountNumber) {
         try {
-            if (userId != account.getUserId()) {
+            // Check error param
+            if (String.valueOf(UserId) == null) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "UserId", userId));
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
-            }
-            if (accountNumber != account.getAccountNumber()) {
+            } else if (String.valueOf(AccountNumber) == null) {
                 new ResourceNotFoundException(
-                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", accountNumber));
+                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
                 return null;
             }
-            List<Account> ListAccount = accountRepository.findByUserId(userId);
-            if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", userId);
+
+            // Check data exists
+            if (accountRepository.findByUserId(UserId).isEmpty()) {
+                new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
-            } else {
-                if (accountRepository.findByAccountNumber(account.getAccountNumber()) == null) {
-                    new ResourceNotFoundException("Account", "AccountNumber", accountNumber);
-                    return null;
-                } else {
-                    Account existingAccount = accountRepository.findByAccountNumber(accountNumber);
-                    existingAccount.setAccountNumber(account.getAccountNumber());
-                    existingAccount.setBalance(account.getBalance());
-                    accountRepository.save(existingAccount);
-                    return existingAccount;
-                }
+            } else if (accountRepository.findByUserId(AccountNumber) == null) {
+                new ResourceNotFoundException("Account", "AccountNumber", String.valueOf(AccountNumber));
+                return null;
             }
+
+            return accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", e);
+            new ResourceErrorException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
 
     @Override
-    public void deleteAccount(long userId, int accountNumber) {
+    public Account saveAccount(long UserId, Account account) {
         try {
-            List<Account> ListAccount = accountRepository.findByUserId(userId);
-            if (ListAccount.isEmpty()) {
-                new ResourceNotFoundException("ListAccount", "UserId", userId);
-            } else {
-                if (accountRepository.findByAccountNumber(accountNumber) == null) {
-                    new ResourceNotFoundException("Account", "AccountNumber", accountNumber);
-                } else {
-                    accountRepository.deleteByAccountNumber(accountNumber);
-                }
+            // Check error param
+            if (String.valueOf(UserId) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
+                return null;
+            } else if (String.valueOf(account.getUserId()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
+                return null;
             }
+
+            // Check data exists
+            if (UserId != account.getUserId()) {
+                new ResourceNotFoundException(
+                        String.format("%s is different data with %s : '%s'", "Account", "UserId",
+                                String.valueOf(UserId) + " - " + String.valueOf(account.getUserId())));
+                return null;
+            } else if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return null;
+            } else if (accountRepository.findById(account.getAccountNumber()) != null) {
+                new ResourceNotFoundException(
+                        String.format("%s is exists with %s : '%s'", "Account", "AccountNumber",
+                                String.valueOf(account.getAccountNumber())));
+                return null;
+            }
+
+            return accountRepository.save(account);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", e);
+            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            return null;
+        }
+    }
+
+    @Override
+    public Account updateAccount(long UserId, Account account, long AccountNumber) {
+        try {
+            // Check error param
+            if (account == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "Account", "null"));
+                return null;
+            } else if (String.valueOf(UserId) == null || String.valueOf(account.getUserId()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
+                return null;
+            } else if (String.valueOf(AccountNumber) == null || String.valueOf(account.getAccountNumber()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
+                return null;
+            } else if (String.valueOf(account.getBalance()) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "Balance", "null"));
+                return null;
+            } else if (AccountNumber != account.getAccountNumber()) {
+                new ResourceNotFoundException(
+                        String.format("%s is different data with %s : '%s'", "Account", "AccountNumber",
+                                String.valueOf(AccountNumber) + " - " + String.valueOf(account.getAccountNumber())));
+                return null;
+            }
+
+            // Check data exists
+            if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return null;
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
+                new ResourceNotFoundException("Account", "UserId - AccountNumber",
+                        String.valueOf(UserId) + " - " + String.valueOf(AccountNumber));
+                return null;
+            }
+
+            Account existingAccount = accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber);
+            existingAccount.setUserId(account.getUserId());
+            existingAccount.setBalance(account.getBalance());
+            accountRepository.save(existingAccount);
+            return existingAccount;
+        } catch (Exception e) {
+            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            return null;
+        }
+    }
+
+    @Override
+    public boolean deleteAccount(long UserId, long AccountNumber) {
+        try {
+            // Check error param
+            if (String.valueOf(UserId) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
+                return false;
+            } else if (String.valueOf(AccountNumber) == null) {
+                new ResourceNotFoundException(
+                        String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
+                return false;
+            }
+
+            // Check data exists
+            if (userRepository.findById(UserId) == null) {
+                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                return false;
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
+                new ResourceNotFoundException("Account", "UserId - AccountNumber",
+                        String.valueOf(UserId) + " - " + String.valueOf(AccountNumber));
+                return false;
+            }
+
+            accountRepository.deleteById(AccountNumber);
+            return true;
+        } catch (Exception e) {
+            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            return false;
         }
     }
 }

@@ -6,11 +6,11 @@ public interface AccountService {
 
     List<Account> getAllAccounts(long userId);
 
-    Account getAccountByNumber(long userId, int accountNumber);
+    Account getAccountByNumber(long userId, long accountNumber);
 
     Account saveAccount(long userId, Account account);
 
-    Account updateAccount(long userId, Account account, int accountNumber);
+    Account updateAccount(long userId, Account account, long accountNumber);
 
-    void deleteAccount(long userId, int accountNumber);
+    boolean deleteAccount(long userId, long accountNumber);
 }

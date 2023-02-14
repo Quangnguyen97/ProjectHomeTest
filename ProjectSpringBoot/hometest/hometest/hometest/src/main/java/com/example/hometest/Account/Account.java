@@ -16,11 +16,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Account {
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long userId;
-    private @GeneratedValue int accountNumber;
+    private long userId;
+    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long accountNumber;
     private double balance;
 
-    public Account(long userId, int accountNumber, double balance) {
+    public Account(long userId, long accountNumber, double balance) {
         super();
         this.userId = userId;
         this.accountNumber = accountNumber;
@@ -35,11 +35,11 @@ public class Account {
         this.userId = userId;
     }
 
-    public int getAccountNumber() {
+    public long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(int accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 

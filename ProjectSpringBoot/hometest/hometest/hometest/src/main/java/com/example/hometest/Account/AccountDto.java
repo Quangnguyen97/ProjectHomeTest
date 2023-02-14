@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class AccountDto {
     private long userId;
-    private int accountNumber;
+    private long accountNumber;
     private double balance;
 }
