@@ -32,17 +32,18 @@ public class MyBasicAuthWebSecurityConfiguration {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.httpBasic()
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf().disable()
+                .cors().disable()
+                .httpBasic()
                 .and()
-                .authorizeRequests()
-                .anyRequest()
-                .hasRole("ADMIN")
+                .authorizeRequests().requestMatchers("/").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
                 .and()
-                .httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint);
-        return http.build();
+                .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
+        return httpSecurity.build();
     }
 }
