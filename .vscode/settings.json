@@ -1,10 +1,13 @@
 {
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
+        "Authen",
         "getaccount",
         "getuser",
         "hometest",
         "mapstruct",
+        "quang",
+        "Servlet",
         "setuser",
         "Userid"
     ],

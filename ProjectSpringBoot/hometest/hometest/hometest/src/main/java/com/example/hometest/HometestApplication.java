@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = { "com.example.hometest.BasicAuthen" })
 @ComponentScan(basePackages = { "com.example.hometest.Module" })
 @ComponentScan(basePackages = { "com.example.hometest.Account" })
 @ComponentScan(basePackages = { "com.example.hometest.User" })
