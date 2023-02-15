@@ -1,50 +1,40 @@
 package com.example.hometest.Response;
 
-import java.util.Objects;
 import java.util.List;
 
 public class Response {
     private int errorCode;
     private String errorDescription;
-    private List<object> response;
+    private List<Object> response;
 
-    public Response(long userId, String fullName, String password, String notificationToken) {
+    public Response(int errorCode, String errorDescription, List<Object> response) {
         super();
-        this.userId = userId;
-        this.fullName = fullName;
-        this.password = password;
-        this.notificationToken = notificationToken;
+        this.errorCode = errorCode;
+        this.errorDescription = errorDescription;
+        this.response = response;
     }
 
-    public long getUserId() {
-        return userId;
+    public int getErrorCode() {
+        return errorCode;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setErrorCode(int errorCode) {
+        this.errorCode = errorCode;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getErrorDescription() {
+        return errorDescription;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
     }
 
-    public String getPassword() {
-        return password;
+    public List<Object> getResponse() {
+        return response;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getNotificationToken() {
-        return notificationToken;
-    }
-
-    public void setNotificationToken(String notificationToken) {
-        this.notificationToken = notificationToken;
+    public void setResponse(List<Object> response) {
+        this.response = response;
     }
 }
