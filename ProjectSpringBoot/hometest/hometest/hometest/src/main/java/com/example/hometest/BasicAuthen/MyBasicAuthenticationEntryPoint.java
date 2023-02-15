@@ -32,9 +32,9 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
         ResponseDto responseDto = new ResponseDto();
-        responseDto.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
-        responseDto.setErrorDescription(HttpStatus.valueOf(HttpServletResponse.SC_UNAUTHORIZED).getReasonPhrase());
-        responseDto.setErrorMessage(authException.getMessage());
+        responseDto.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        responseDto.setDescription(HttpStatus.valueOf(HttpServletResponse.SC_UNAUTHORIZED).getReasonPhrase());
+        responseDto.setMessage(authException.getMessage());
         responseDto.setResponse(null);
 
         PrintWriter writer = response.getWriter();

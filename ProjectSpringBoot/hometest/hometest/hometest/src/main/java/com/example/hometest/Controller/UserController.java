@@ -140,9 +140,9 @@ public class UserController {
     private ResponseUserDto ResponseUserDto(ResponseUserDto responseUserDto, int errorCode, String errorDescription,
             String errorMessage, List<User> listUser) {
         try {
-            responseUserDto.setErrorCode(errorCode);
-            responseUserDto.setErrorDescription(errorDescription);
-            responseUserDto.setErrorMessage(errorMessage);
+            responseUserDto.setStatus(errorCode);
+            responseUserDto.setDescription(errorDescription);
+            responseUserDto.setMessage(errorMessage);
             responseUserDto.setResponse(listUser);
             return responseUserDto;
         } catch (Exception e) {

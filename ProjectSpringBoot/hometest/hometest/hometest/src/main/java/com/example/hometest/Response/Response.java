@@ -3,41 +3,41 @@ package com.example.hometest.Response;
 import java.util.List;
 
 public class Response {
-    private int errorCode;
-    private String errorDescription;
-    private String errorMessage;
+    private int status;
+    private String description;
+    private String message;
     private List<Object> response;
 
-    public Response(int errorCode, String errorDescription, String errorMessage, List<Object> response) {
+    public Response(int status, String description, String message, List<Object> response) {
         super();
-        this.errorCode = errorCode;
-        this.errorDescription = errorDescription;
-        this.errorMessage = errorMessage;
+        this.status = status;
+        this.description = description;
+        this.message = message;
         this.response = response;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public int getStatus() {
+        return status;
     }
 
-    public void setErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getErrorDescription() {
-        return errorDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setErrorDescription(String errorDescription) {
-        this.errorDescription = errorDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public List<Object> getResponse() {

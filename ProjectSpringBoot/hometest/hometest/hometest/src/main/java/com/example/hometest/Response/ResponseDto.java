@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 public class ResponseDto {
-    private int errorCode;
-    private String errorDescription;
-    private String errorMessage;
+    private int status;
+    private String description;
+    private String message;
     private List<Object> response;
 }
