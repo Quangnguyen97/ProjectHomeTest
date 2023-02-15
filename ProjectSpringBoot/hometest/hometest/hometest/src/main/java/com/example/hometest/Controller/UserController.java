@@ -62,7 +62,7 @@ public class UserController {
                 throw new ResourceRuntimeException();
             } else {
                 List<User> listUser = new ArrayList<User>();
-                listUser.add(modelMapper.map(user, User.class));
+                listUser.add(user);
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
                         HttpStatus.OK.getReasonPhrase(), "", listUser);
                 return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
@@ -79,14 +79,13 @@ public class UserController {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
         try {
             User user = userServiceImpl.saveUser(modelMapper.map(userDto, User.class));
-
             if (user == null) {
                 throw new ResourceRuntimeException();
             } else {
                 List<User> listUser = new ArrayList<User>();
                 listUser.add(user);
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.CREATED.value(),
-                        HttpStatus.CREATED.getReasonPhrase(), "", listUser);
+                        HttpStatus.CREATED.getReasonPhrase(), "User created successfully", listUser);
                 return ResponseEntity.status(HttpStatus.CREATED).body(responseUserDto);
             }
         } catch (Exception e) {
@@ -102,14 +101,13 @@ public class UserController {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
         try {
             User user = userServiceImpl.updateUser(modelMapper.map(userDto, User.class), userId);
-
             if (user == null) {
                 throw new ResourceRuntimeException();
             } else {
                 List<User> listUser = new ArrayList<User>();
                 listUser.add(user);
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
-                        HttpStatus.ACCEPTED.getReasonPhrase(), "", listUser);
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "User updated successfully", listUser);
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
             }
         } catch (Exception e) {
@@ -125,7 +123,7 @@ public class UserController {
         try {
             if (userServiceImpl.deleteUser(userId)) {
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
-                        HttpStatus.ACCEPTED.getReasonPhrase(), "", null);
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "User deleted successfully", null);
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
             } else {
                 throw new ResourceRuntimeException();
@@ -137,12 +135,12 @@ public class UserController {
         }
     }
 
-    private ResponseUserDto ResponseUserDto(ResponseUserDto responseUserDto, int errorCode, String errorDescription,
-            String errorMessage, List<User> listUser) {
+    private ResponseUserDto ResponseUserDto(ResponseUserDto responseUserDto, int status, String description,
+            String message, List<User> listUser) {
         try {
-            responseUserDto.setStatus(errorCode);
-            responseUserDto.setDescription(errorDescription);
-            responseUserDto.setMessage(errorMessage);
+            responseUserDto.setStatus(status);
+            responseUserDto.setDescription(description);
+            responseUserDto.setMessage(message);
             responseUserDto.setResponse(listUser);
             return responseUserDto;
         } catch (Exception e) {

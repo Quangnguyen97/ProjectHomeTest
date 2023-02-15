@@ -1,5 +1,6 @@
 package com.example.hometest.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.Account.*;
+import com.example.hometest.Module.*;
+import com.example.hometest.Response.*;
 
 @RestController
 public class AccountController {
@@ -29,73 +32,123 @@ public class AccountController {
     }
 
     @GetMapping("/user/{userId}/account")
-    public List<Account> getAllAccounts(@PathVariable(name = "userId") long userId) {
-        List<Account> ListAccount = accountServiceImpl.getAllAccounts(userId)
-                .stream()
-                .map(post -> modelMapper.map(post, Account.class))
-                .collect(Collectors.toList());
-        if (ListAccount.isEmpty()) {
-            return null;
-        } else {
-            return ListAccount;
+    public ResponseEntity<ResponseAccountDto> getAllAccounts(@PathVariable(name = "userId") long userId) {
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            List<Account> listAccount = accountServiceImpl.getAllAccounts(userId)
+                    .stream()
+                    .map(post -> modelMapper.map(post, Account.class))
+                    .collect(Collectors.toList());
+            if (listAccount.isEmpty()) {
+                throw new ResourceRuntimeException();
+            } else {
+                responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.OK.value(),
+                        HttpStatus.OK.getReasonPhrase(), "", listAccount);
+                return ResponseEntity.status(HttpStatus.OK).body(responseAccountDto);
+            }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
         }
     }
 
     @GetMapping("/user/{userId}/account/{accountNumber}")
-    public ResponseEntity<AccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
+    public ResponseEntity<ResponseAccountDto> getAccountByNumber(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
-        Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
-
-        if (account != null) {
-            // convert entity to DTO
-            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-            return ResponseEntity.ok().body(accountResponse);
-        } else {
-            return ResponseEntity.notFound().build();
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
+            if (account == null) {
+                throw new ResourceRuntimeException();
+            } else {
+                List<Account> listAccount = new ArrayList<Account>();
+                listAccount.add(account);
+                responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.OK.value(),
+                        HttpStatus.OK.getReasonPhrase(), "", listAccount);
+                return ResponseEntity.status(HttpStatus.OK).body(responseAccountDto);
+            }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
         }
     }
 
     @PostMapping("/user/{userId}/account")
-    public ResponseEntity<AccountDto> saveAccount(@PathVariable(name = "userId") long userId,
+    public ResponseEntity<ResponseAccountDto> saveAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto) {
-        // convert DTO to entity
-        Account accountRequest = modelMapper.map(accountDto, Account.class);
-        Account account = accountServiceImpl.saveAccount(userId, accountRequest);
-
-        if (account != null) {
-            // convert entity to DTO
-            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-            return new ResponseEntity<AccountDto>(accountResponse, HttpStatus.CREATED);
-        } else {
-            return ResponseEntity.badRequest().body(null);
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            Account account = accountServiceImpl.saveAccount(userId, modelMapper.map(accountDto, Account.class));
+            if (account != null) {
+                throw new ResourceRuntimeException();
+            } else {
+                List<Account> listAccount = new ArrayList<Account>();
+                listAccount.add(account);
+                responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.CREATED.value(),
+                        HttpStatus.CREATED.getReasonPhrase(), "Account created successfully", listAccount);
+                return ResponseEntity.status(HttpStatus.OK).body(responseAccountDto);
+            }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
         }
     }
 
-    // change the request for DTO
-    // change the response for DTO
     @PutMapping("/user/{userId}/account/{accountNumber}")
-    public ResponseEntity<AccountDto> updateAccount(@PathVariable(name = "userId") long userId,
+    public ResponseEntity<ResponseAccountDto> updateAccount(@PathVariable(name = "userId") long userId,
             @RequestBody AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
-        // convert DTO to Entity
-        Account accountRequest = modelMapper.map(accountDto, Account.class);
-        Account account = accountServiceImpl.updateAccount(userId, accountRequest, accountNumber);
-
-        if (account != null) {
-            // entity to DTO
-            AccountDto accountResponse = modelMapper.map(account, AccountDto.class);
-            return ResponseEntity.ok().body(accountResponse);
-        } else {
-            return ResponseEntity.badRequest().body(null);
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            Account account = accountServiceImpl.updateAccount(userId, modelMapper.map(accountDto, Account.class),
+                    accountNumber);
+            if (account == null) {
+                throw new ResourceRuntimeException();
+            } else {
+                List<Account> listAccount = new ArrayList<Account>();
+                listAccount.add(account);
+                responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.ACCEPTED.value(),
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "Account updated successfully", listAccount);
+                return ResponseEntity.status(HttpStatus.OK).body(responseAccountDto);
+            }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
         }
     }
 
     @DeleteMapping("/user/{userId}/account/{accountNumber}")
-    public ResponseEntity<String> deleteAccount(@PathVariable(name = "userId") long userId,
+    public ResponseEntity<ResponseAccountDto> deleteAccount(@PathVariable(name = "userId") long userId,
             @PathVariable(name = "accountNumber") int accountNumber) {
-        if (accountServiceImpl.deleteAccount(userId, accountNumber)) {
-            return new ResponseEntity<String>("Account deleted successfully!.", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<String>("Account deleted failed!.", HttpStatus.EXPECTATION_FAILED);
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            if (accountServiceImpl.deleteAccount(userId, accountNumber)) {
+                responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.ACCEPTED.value(),
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "Account deleted successfully", null);
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseAccountDto);
+            } else {
+                throw new ResourceRuntimeException();
+            }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
+        }
+    }
+
+    private ResponseAccountDto ResponseAccountDto(ResponseAccountDto responseAccountDto, int status, String description,
+            String message, List<Account> listAccount) {
+        try {
+            responseAccountDto.setStatus(status);
+            responseAccountDto.setDescription(description);
+            responseAccountDto.setMessage(message);
+            responseAccountDto.setResponse(listAccount);
+            return responseAccountDto;
+        } catch (Exception e) {
+            throw new ResourceRuntimeException();
         }
     }
 }
