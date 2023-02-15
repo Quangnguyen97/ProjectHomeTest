@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "Users")
@@ -18,8 +19,14 @@ import lombok.Setter;
 @NoArgsConstructor
 public class User {
     private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long userId;
+
+    @NotEmpty(message = "fullName must not be empty")
     private String fullName;
+
+    @NotEmpty(message = "password must not be empty")
     private String password;
+
+    @NotEmpty(message = "notificationToken must not be empty")
     private String notificationToken;
 
     public User(long userId, String fullName, String password, String notificationToken) {
