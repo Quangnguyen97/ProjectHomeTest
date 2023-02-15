@@ -29,18 +29,18 @@ public class UserServiceImpl implements UserService {
             // Check error param
             if (String.valueOf(UserId) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "UserId", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "UserId", "null"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException(
-                        String.format("%s does not exist with param %s : '%s'", "User", "UserId", UserId));
+                        String.format("%s does not exist with param %s='%s'", "User", "UserId", UserId));
             }
 
             return userRepository.findById(UserId).orElseThrow(
                     () -> new ResourceRuntimeException(
-                            String.format("%s does not exist with param %s : '%s'", "User", "UserId", UserId)));
+                            String.format("%s does not exist with param %s='%s'", "User", "UserId", UserId)));
         } catch (Exception e) {
             throw new ResourceRuntimeException("Exception", "Error", e.getMessage());
         }
@@ -52,25 +52,25 @@ public class UserServiceImpl implements UserService {
             // Check error param
             if (user == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "User", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "User", "null"));
             } else if (String.valueOf(user.getUserId()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "UserId", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "UserId", "null"));
             } else if (String.valueOf(user.getFullName()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "FullName", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "FullName", "null"));
             } else if (String.valueOf(user.getPassword()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "Password", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "Password", "null"));
             } else if (String.valueOf(user.getNotificationToken()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "NotificationToken", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "NotificationToken", "null"));
             }
 
             // Check data exists
             if (userRepository.findById(user.getUserId()).isEmpty() == false) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have exist with param %s : '%s'", "User", "UserId",
+                        String.format("%s have exist with param %s='%s'", "User", "UserId",
                                 String.valueOf(user.getUserId())));
             }
 
@@ -86,25 +86,25 @@ public class UserServiceImpl implements UserService {
             // Check error param
             if (user == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "User", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "User", "null"));
             } else if (String.valueOf(UserId) == null || String.valueOf(user.getUserId()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "UserId", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "UserId", "null"));
             } else if (String.valueOf(user.getFullName()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "FullName", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "FullName", "null"));
             } else if (String.valueOf(user.getPassword()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "Password", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "Password", "null"));
             } else if (String.valueOf(user.getNotificationToken()) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "User", "NotificationToken", "null"));
+                        String.format("%s have error with param %s='%s'", "User", "NotificationToken", "null"));
             }
 
             // Check data exists
             if (UserId != user.getUserId()) {
                 throw new ResourceRuntimeException(
-                        String.format("%s is different data with param %s : '%s'", "User", "UserId",
+                        String.format("%s is different data with param %s='%s'", "User", "UserId",
                                 String.valueOf(UserId) + " - " + String.valueOf(user.getUserId())));
             } else if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException("User", "UserId", String.valueOf(UserId));
@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
             // Check error param
             if (String.valueOf(UserId) == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with param %s : '%s'", "Account", "UserId", "null"));
+                        String.format("%s have error with param %s='%s'", "Account", "UserId", "null"));
             }
 
             // Check data exists
