@@ -3,14 +3,14 @@ package com.example.hometest.Module;
 import com.google.common.base.Strings;
 
 public class ResourceValidString {
-    public boolean ValidStringIsOk(String string) {
+    public boolean StringIsError(String string) {
         try {
             if (Strings.isNullOrEmpty(string) || string == "null" || string.trim() == "NULL") {
-                return false;
+                return true;
             }
-            return true;
-        } catch (Exception e) {
             return false;
+        } catch (Exception e) {
+            throw new ResourceRuntimeException(e.getMessage());
         }
     }
 }
