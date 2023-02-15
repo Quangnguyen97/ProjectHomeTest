@@ -34,20 +34,22 @@ public class UserController {
     @GetMapping("/user")
     public ResponseEntity<ResponseUserDto> getAllResponseUsers() {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
-        List<User> listUser = userServiceImpl.getAllUsers()
-                .stream()
-                .map(post -> modelMapper.map(post, User.class))
-                .collect(Collectors.toList());
-        if (listUser.isEmpty()) {
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.NOT_FOUND.value(),
-                    HttpStatus.NOT_FOUND.getReasonPhrase(),
-                    null);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseUserDto);
-        } else {
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
-                    HttpStatus.OK.getReasonPhrase(),
-                    listUser);
-            return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
+        try {
+            List<User> listUser = userServiceImpl.getAllUsers()
+                    .stream()
+                    .map(post -> modelMapper.map(post, User.class))
+                    .collect(Collectors.toList());
+            if (listUser.isEmpty()) {
+                throw new ResourceRuntimeException();
+            } else {
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
+                        HttpStatus.OK.getReasonPhrase(), "", listUser);
+                return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
+            }
+        } catch (Exception e) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
 
@@ -57,22 +59,17 @@ public class UserController {
         try {
             User user = userServiceImpl.getUserByUserId(userId);
             if (user == null) {
-                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.NOT_FOUND.value(),
-                        HttpStatus.NOT_FOUND.getReasonPhrase(),
-                        null);
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseUserDto);
+                throw new ResourceRuntimeException();
             } else {
-                List<User> ListUser = new ArrayList<User>();
-                ListUser.add(modelMapper.map(user, User.class));
+                List<User> listUser = new ArrayList<User>();
+                listUser.add(modelMapper.map(user, User.class));
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
-                        HttpStatus.OK.getReasonPhrase(),
-                        ListUser);
+                        HttpStatus.OK.getReasonPhrase(), "", listUser);
                 return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
             }
-        } catch (ResourceNotFoundException e) {
+        } catch (Exception e) {
             responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
-                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase() + " - " + e,
-                    null);
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
@@ -80,20 +77,22 @@ public class UserController {
     @PostMapping("/user")
     public ResponseEntity<ResponseUserDto> saveUser(@RequestBody UserDto userDto) {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
-        User user = userServiceImpl.saveUser(modelMapper.map(userDto, User.class));
+        try {
+            User user = userServiceImpl.saveUser(modelMapper.map(userDto, User.class));
 
-        if (user == null) {
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.BAD_REQUEST.value(),
-                    HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                    null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseUserDto);
-        } else {
-            List<User> ListUser = new ArrayList<User>();
-            ListUser.add(user);
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.CREATED.value(),
-                    HttpStatus.CREATED.getReasonPhrase(),
-                    ListUser);
-            return ResponseEntity.status(HttpStatus.CREATED).body(responseUserDto);
+            if (user == null) {
+                throw new ResourceRuntimeException();
+            } else {
+                List<User> listUser = new ArrayList<User>();
+                listUser.add(user);
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.CREATED.value(),
+                        HttpStatus.CREATED.getReasonPhrase(), "", listUser);
+                return ResponseEntity.status(HttpStatus.CREATED).body(responseUserDto);
+            }
+        } catch (Exception e) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
 
@@ -101,48 +100,53 @@ public class UserController {
     public ResponseEntity<ResponseUserDto> updateUser(@PathVariable(name = "userId") Long userId,
             @RequestBody UserDto userDto) {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
-        User user = userServiceImpl.updateUser(modelMapper.map(userDto, User.class), userId);
+        try {
+            User user = userServiceImpl.updateUser(modelMapper.map(userDto, User.class), userId);
 
-        if (user == null) {
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.BAD_REQUEST.value(),
-                    HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                    null);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseUserDto);
-        } else {
-            List<User> ListUser = new ArrayList<User>();
-            ListUser.add(user);
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
-                    HttpStatus.ACCEPTED.getReasonPhrase(),
-                    ListUser);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
+            if (user == null) {
+                throw new ResourceRuntimeException();
+            } else {
+                List<User> listUser = new ArrayList<User>();
+                listUser.add(user);
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "", listUser);
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
+            }
+        } catch (Exception e) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
 
     @DeleteMapping("/user/{userId}")
     public ResponseEntity<ResponseUserDto> deleteUser(@PathVariable(name = "userId") Long userId) {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
-        if (userServiceImpl.deleteUser(userId)) {
-            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
-                    HttpStatus.ACCEPTED.getReasonPhrase() + " - User deleted successfully!",
-                    null);
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
-        } else {
+        try {
+            if (userServiceImpl.deleteUser(userId)) {
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
+                        HttpStatus.ACCEPTED.getReasonPhrase(), "", null);
+                return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
+            } else {
+                throw new ResourceRuntimeException();
+            }
+        } catch (Exception e) {
             responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
-                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase() + " - User deleted failed!",
-                    null);
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
 
     private ResponseUserDto ResponseUserDto(ResponseUserDto responseUserDto, int errorCode, String errorDescription,
-            List<User> listUser) {
+            String errorMessage, List<User> listUser) {
         try {
             responseUserDto.setErrorCode(errorCode);
             responseUserDto.setErrorDescription(errorDescription);
+            responseUserDto.setErrorMessage(errorMessage);
             responseUserDto.setResponse(listUser);
             return responseUserDto;
         } catch (Exception e) {
-            return null;
+            throw new ResourceRuntimeException();
         }
     }
 }

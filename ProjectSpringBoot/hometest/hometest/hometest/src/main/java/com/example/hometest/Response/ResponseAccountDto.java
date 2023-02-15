@@ -9,5 +9,6 @@ import com.example.hometest.Account.Account;
 public class ResponseAccountDto {
     private int errorCode;
     private String errorDescription;
+    private String errorMessage;
     private List<Account> response;
 }

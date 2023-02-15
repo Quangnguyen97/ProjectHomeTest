@@ -5,12 +5,14 @@ import java.util.List;
 public class Response {
     private int errorCode;
     private String errorDescription;
+    private String errorMessage;
     private List<Object> response;
 
-    public Response(int errorCode, String errorDescription, List<Object> response) {
+    public Response(int errorCode, String errorDescription, String errorMessage, List<Object> response) {
         super();
         this.errorCode = errorCode;
         this.errorDescription = errorDescription;
+        this.errorMessage = errorMessage;
         this.response = response;
     }
 
@@ -28,6 +30,14 @@ public class Response {
 
     public void setErrorDescription(String errorDescription) {
         this.errorDescription = errorDescription;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
     }
 
     public List<Object> getResponse() {

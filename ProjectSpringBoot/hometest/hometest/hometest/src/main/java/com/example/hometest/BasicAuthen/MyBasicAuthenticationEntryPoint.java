@@ -3,6 +3,7 @@ package com.example.hometest.BasicAuthen;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -32,7 +33,8 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
 
         ResponseDto responseDto = new ResponseDto();
         responseDto.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
-        responseDto.setErrorDescription(authException.getMessage());
+        responseDto.setErrorDescription(HttpStatus.valueOf(HttpServletResponse.SC_UNAUTHORIZED).getReasonPhrase());
+        responseDto.setErrorMessage(authException.getMessage());
         responseDto.setResponse(null);
 
         PrintWriter writer = response.getWriter();

@@ -23,20 +23,20 @@ public class AccountServiceImpl implements AccountService {
         try {
             // Check error param
             if (String.valueOf(UserId) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             }
 
             // Check data exists
             if (accountRepository.findByUserId(UserId).isEmpty() == true) {
-                new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
+                new ResourceRuntimeException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
             }
 
             return accountRepository.findByUserId(UserId);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            new ResourceRuntimeException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
@@ -46,27 +46,27 @@ public class AccountServiceImpl implements AccountService {
         try {
             // Check error param
             if (String.valueOf(UserId) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             } else if (String.valueOf(AccountNumber) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
                 return null;
             }
 
             // Check data exists
             if (accountRepository.findByUserId(UserId).isEmpty() == true) {
-                new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
+                new ResourceRuntimeException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findByUserId(AccountNumber).isEmpty() == true) {
-                new ResourceNotFoundException("Account", "AccountNumber", String.valueOf(AccountNumber));
+                new ResourceRuntimeException("Account", "AccountNumber", String.valueOf(AccountNumber));
                 return null;
             }
 
             return accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            new ResourceRuntimeException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
@@ -76,34 +76,34 @@ public class AccountServiceImpl implements AccountService {
         try {
             // Check error param
             if (String.valueOf(UserId) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             } else if (String.valueOf(account.getUserId()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             } else if (String.valueOf(account.getAccountNumber()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
                 return null;
             } else if (String.valueOf(account.getBalance()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "Balance", "null"));
                 return null;
             }
 
             // Check data exists
             if (UserId != account.getUserId()) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is different data with %s : '%s'", "Account", "UserId",
                                 String.valueOf(UserId) + " - " + String.valueOf(account.getUserId())));
                 return null;
             } else if (userRepository.findById(UserId).isEmpty() == true) {
-                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                new ResourceRuntimeException("User", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findById(account.getAccountNumber()).isEmpty() == false) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is exists with %s : '%s'", "Account", "AccountNumber",
                                 String.valueOf(account.getAccountNumber())));
                 return null;
@@ -111,7 +111,7 @@ public class AccountServiceImpl implements AccountService {
 
             return accountRepository.save(account);
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            new ResourceRuntimeException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
@@ -121,34 +121,34 @@ public class AccountServiceImpl implements AccountService {
         try {
             // Check error param
             if (account == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "Account", "null"));
                 return null;
             } else if (String.valueOf(UserId) == null || String.valueOf(account.getUserId()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return null;
             } else if (String.valueOf(AccountNumber) == null || String.valueOf(account.getAccountNumber()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
                 return null;
             } else if (String.valueOf(account.getBalance()) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "Balance", "null"));
                 return null;
             }
 
             // Check data exists
             if (AccountNumber != account.getAccountNumber()) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is different data with %s : '%s'", "Account", "AccountNumber",
                                 String.valueOf(AccountNumber) + " - " + String.valueOf(account.getAccountNumber())));
                 return null;
             } else if (userRepository.findById(UserId).isEmpty() == true) {
-                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                new ResourceRuntimeException("User", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
-                new ResourceNotFoundException("Account", "UserId - AccountNumber",
+                new ResourceRuntimeException("Account", "UserId - AccountNumber",
                         String.valueOf(UserId) + " - " + String.valueOf(AccountNumber));
                 return null;
             }
@@ -159,7 +159,7 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.save(existingAccount);
             return existingAccount;
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            new ResourceRuntimeException("Exception", "Error", String.valueOf(e));
             return null;
         }
     }
@@ -169,21 +169,21 @@ public class AccountServiceImpl implements AccountService {
         try {
             // Check error param
             if (String.valueOf(UserId) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "UserId", "null"));
                 return false;
             } else if (String.valueOf(AccountNumber) == null) {
-                new ResourceNotFoundException(
+                new ResourceRuntimeException(
                         String.format("%s is error param with %s : '%s'", "Account", "AccountNumber", "null"));
                 return false;
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
-                new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
+                new ResourceRuntimeException("User", "UserId", String.valueOf(UserId));
                 return false;
             } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
-                new ResourceNotFoundException("Account", "UserId - AccountNumber",
+                new ResourceRuntimeException("Account", "UserId - AccountNumber",
                         String.valueOf(UserId) + " - " + String.valueOf(AccountNumber));
                 return false;
             }
@@ -191,7 +191,7 @@ public class AccountServiceImpl implements AccountService {
             accountRepository.deleteById(AccountNumber);
             return true;
         } catch (Exception e) {
-            new ResourceErrorException("Exception", "Error", String.valueOf(e));
+            new ResourceRuntimeException("Exception", "Error", String.valueOf(e));
             return false;
         }
     }

@@ -9,5 +9,6 @@ import com.example.hometest.User.User;
 public class ResponseUserDto {
     private int errorCode;
     private String errorDescription;
+    private String errorMessage;
     private List<User> response;
 }
