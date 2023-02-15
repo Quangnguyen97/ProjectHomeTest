@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.User.*;
+import com.example.hometest.Response.*;
 
 @RestController
 public class UserController {
     @Autowired
     private ModelMapper modelMapper;
-
     private UserServiceImpl userServiceImpl;
 
     public UserController(UserServiceImpl userServiceImpl) {
@@ -40,6 +40,25 @@ public class UserController {
         } else {
             return ListUser;
         }
+    }
+
+    @GetMapping("response/user")
+    public ResponseEntity<ResponseUserDto> getAllResponseUsers() {
+        ResponseUserDto responseDto = modelMapper.map(Response.class, ResponseUserDto.class);
+        List<User> ListUser = userServiceImpl.getAllUsers()
+                .stream()
+                .map(post -> modelMapper.map(post, User.class))
+                .collect(Collectors.toList());
+        if (ListUser.isEmpty()) {
+            responseDto.setErrorCode(404);
+            responseDto.setErrorDescription("Not Found");
+            responseDto.setResponse(null);
+        } else {
+            responseDto.setErrorCode(0);
+            responseDto.setErrorDescription("Ok");
+            responseDto.setResponse(ListUser);
+        }
+        return ResponseEntity.ok().body(responseDto);
     }
 
     @GetMapping("/user/{userId}")

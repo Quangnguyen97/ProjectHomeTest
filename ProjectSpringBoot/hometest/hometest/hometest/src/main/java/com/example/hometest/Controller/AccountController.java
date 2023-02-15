@@ -21,7 +21,6 @@ import com.example.hometest.Account.*;
 public class AccountController {
     @Autowired
     private ModelMapper modelMapper;
-
     private AccountServiceImpl accountServiceImpl;
 
     public AccountController(AccountServiceImpl accountServiceImpl) {
