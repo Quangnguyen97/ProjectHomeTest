@@ -19,8 +19,8 @@ import lombok.Setter;
 public class Account {
     @NotEmpty(message = "userId must not be empty")
 
-    private long userId;
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long accountNumber;
+    private @GeneratedValue(strategy = GenerationType.AUTO) long userId;
+    private @Id @GeneratedValue(strategy = GenerationType.AUTO) long accountNumber;
 
     @NotEmpty(message = "balance must not be empty")
     private double balance;

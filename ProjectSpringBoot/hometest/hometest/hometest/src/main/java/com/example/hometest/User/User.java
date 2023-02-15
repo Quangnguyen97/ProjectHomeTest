@@ -18,7 +18,7 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 public class User {
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long userId;
+    private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
 
     @NotEmpty(message = "fullName must not be empty")
     private String fullName;

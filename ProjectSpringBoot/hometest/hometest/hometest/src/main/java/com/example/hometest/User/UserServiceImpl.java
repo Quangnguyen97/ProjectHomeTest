@@ -34,19 +34,19 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "userId", "null"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException(
-                        String.format("%s does not exist with field %s='%s'", "User", "UserId",
+                        String.format("%s does not exist with field %s='%s'", "User", "userId",
                                 String.valueOf(UserId)));
             }
 
             return userRepository.findById(UserId).orElseThrow(
                     () -> new ResourceRuntimeException(
-                            String.format("%s does not exist with field %s='%s'", "User", "UserId",
+                            String.format("%s does not exist with field %s='%s'", "User", "userId",
                                     String.valueOf(UserId))));
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
@@ -59,25 +59,25 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (user == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "User", "null"));
+                        String.format("%s have error with request body %s='%s'", "User", "User", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "userId", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "FullName", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "Password", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "password", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "NotificationToken", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "notificationToken", "null"));
             }
 
             // Check data exists
             if (userRepository.findById(user.getUserId()).isEmpty() == false) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have exist with field %s='%s'", "User", "UserId",
+                        String.format("%s have exist with field %s='%s'", "User", "userId",
                                 String.valueOf(user.getUserId())));
             }
 
@@ -93,36 +93,36 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (user == null) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "User", "null"));
+                        String.format("%s have error with request body %s='%s'", "User", "User", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(UserId))
                     || ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "userId", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "FullName", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "Password", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "password", "null"));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "NotificationToken", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "notificationToken", "null"));
             }
 
             // Check data exists
             if (UserId != user.getUserId()) {
                 throw new ResourceRuntimeException(
-                        String.format("%s is different data with field %s:'%s', '%s'", "User", "UserId",
+                        String.format("%s is different request body with field %s:'%s', '%s'", "User", "userId",
                                 String.valueOf(UserId), String.valueOf(user.getUserId())));
             } else if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException(
-                        String.format("%s does not exist with field %s='%s'", "User", "UserId",
+                        String.format("%s does not exist with field %s='%s'", "User", "userId",
                                 String.valueOf(UserId)));
             }
 
             User existingUser = userRepository.findById(UserId).orElseThrow(
                     () -> new ResourceRuntimeException(
-                            String.format("%s does not exist with field %s='%s'", "User", "UserId",
+                            String.format("%s does not exist with field %s='%s'", "User", "userId",
                                     String.valueOf(UserId))));
             existingUser.setFullName(user.getFullName());
             existingUser.setPassword(user.getPassword());
@@ -140,13 +140,13 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
+                        String.format("%s have error with field %s='%s'", "User", "userId", "null"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException(
-                        String.format("%s does not exist with field %s='%s'", "User", "UserId",
+                        String.format("%s does not exist with field %s='%s'", "User", "userId",
                                 String.valueOf(UserId)));
             }
 
