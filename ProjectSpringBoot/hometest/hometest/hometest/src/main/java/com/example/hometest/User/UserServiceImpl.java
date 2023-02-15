@@ -35,6 +35,9 @@ public class UserServiceImpl implements UserService {
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
             }
 
             // Check data exists
@@ -63,6 +66,10 @@ public class UserServiceImpl implements UserService {
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
+            } else if (user.getUserId() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "User", "userId",
+                                String.valueOf(user.getUserId())));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
@@ -98,6 +105,13 @@ public class UserServiceImpl implements UserService {
                     || ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
+            } else if (user.getUserId() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "User", "userId",
+                                String.valueOf(user.getUserId())));
             } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
@@ -141,6 +155,9 @@ public class UserServiceImpl implements UserService {
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
             }
 
             // Check data exists

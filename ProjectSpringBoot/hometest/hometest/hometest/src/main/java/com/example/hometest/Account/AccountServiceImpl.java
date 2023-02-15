@@ -26,6 +26,9 @@ public class AccountServiceImpl implements AccountService {
             if (String.valueOf(UserId) == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId", String.valueOf(UserId)));
             }
 
             // Check data exists
@@ -52,9 +55,16 @@ public class AccountServiceImpl implements AccountService {
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId", String.valueOf(UserId)));
             } else if (ResourceValidString.StringIsError(String.valueOf(AccountNumber))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber", "null"));
+            } else if (AccountNumber < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "accountNumber",
+                                String.valueOf(AccountNumber)));
             }
 
             // Check data exists
@@ -78,7 +88,9 @@ public class AccountServiceImpl implements AccountService {
             }
 
             return accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber);
-        } catch (Exception e) {
+        } catch (
+
+        Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
         }
     }
@@ -94,9 +106,20 @@ public class AccountServiceImpl implements AccountService {
                     || ResourceValidString.StringIsError(String.valueOf(account.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId", String.valueOf(UserId)));
+            } else if (account.getUserId() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId",
+                                String.valueOf(account.getUserId())));
             } else if (ResourceValidString.StringIsError(String.valueOf(account.getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber", "null"));
+            } else if (account.getAccountNumber() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "accountNumber",
+                                String.valueOf(account.getAccountNumber())));
             } else if (ResourceValidString.StringIsError(String.valueOf(account.getBalance()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "balance", "null"));
@@ -140,10 +163,25 @@ public class AccountServiceImpl implements AccountService {
                     || ResourceValidString.StringIsError(String.valueOf(account.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId", String.valueOf(UserId)));
+            } else if (account.getUserId() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId",
+                                String.valueOf(account.getUserId())));
             } else if (ResourceValidString.StringIsError(String.valueOf(AccountNumber))
                     || ResourceValidString.StringIsError(String.valueOf(account.getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber", "null"));
+            } else if (AccountNumber < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "accountNumber",
+                                String.valueOf(AccountNumber)));
+            } else if (account.getAccountNumber() < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "accountNumber",
+                                String.valueOf(account.getAccountNumber())));
             } else if (ResourceValidString.StringIsError(String.valueOf(account.getBalance()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "balance", "null"));
@@ -191,9 +229,16 @@ public class AccountServiceImpl implements AccountService {
             if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "userId", "null"));
+            } else if (UserId < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "userId", String.valueOf(UserId)));
             } else if (ResourceValidString.StringIsError(String.valueOf(AccountNumber))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber", "null"));
+            } else if (AccountNumber < 0) {
+                throw new ResourceRuntimeException(
+                        String.format("%s have error with field %s='%s'", "Account", "accountNumber",
+                                String.valueOf(AccountNumber)));
             }
 
             // Check data exists
