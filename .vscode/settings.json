@@ -5,6 +5,7 @@
         "Configurer",
         "getaccount",
         "getuser",
+        "Gson",
         "hometest",
         "javaconfig",
         "mapstruct",

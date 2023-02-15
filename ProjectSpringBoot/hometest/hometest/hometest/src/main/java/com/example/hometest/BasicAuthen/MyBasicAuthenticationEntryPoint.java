@@ -3,10 +3,12 @@ package com.example.hometest.BasicAuthen;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.json.simple.JSONObject;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
+
+import com.example.hometest.Response.ResponseDto;
+import com.google.gson.Gson;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -28,14 +30,12 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
-        hashMap.put("errorCode", HttpServletResponse.SC_UNAUTHORIZED);
-        hashMap.put("errorDescription", authException.getMessage());
-        hashMap.put("response", "null");
-
-        JSONObject jsonObject = new JSONObject(hashMap);
+        ResponseDto responseDto = new ResponseDto();
+        responseDto.setErrorCode(HttpServletResponse.SC_UNAUTHORIZED);
+        responseDto.setErrorDescription(authException.getMessage());
+        responseDto.setResponse(null);
 
         PrintWriter writer = response.getWriter();
-        writer.println(jsonObject);
+        writer.println(new Gson().toJson(responseDto));
     }
 }

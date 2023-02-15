@@ -1,5 +1,6 @@
 package com.example.hometest.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.User.*;
+import com.example.hometest.Module.*;
 import com.example.hometest.Response.*;
 
 @RestController
@@ -30,89 +32,117 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public List<User> getAllUsers() {
-        List<User> ListUser = userServiceImpl.getAllUsers()
-                .stream()
-                .map(post -> modelMapper.map(post, User.class))
-                .collect(Collectors.toList());
-        if (ListUser.isEmpty()) {
-            return null;
-        } else {
-            return ListUser;
-        }
-    }
-
-    @GetMapping("response/user")
     public ResponseEntity<ResponseUserDto> getAllResponseUsers() {
-        ResponseUserDto responseDto = modelMapper.map(Response.class, ResponseUserDto.class);
-        List<User> ListUser = userServiceImpl.getAllUsers()
+        ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
+        List<User> listUser = userServiceImpl.getAllUsers()
                 .stream()
                 .map(post -> modelMapper.map(post, User.class))
                 .collect(Collectors.toList());
-        if (ListUser.isEmpty()) {
-            responseDto.setErrorCode(404);
-            responseDto.setErrorDescription("Not Found");
-            responseDto.setResponse(null);
+        if (listUser.isEmpty()) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.NOT_FOUND.value(),
+                    HttpStatus.NOT_FOUND.getReasonPhrase(),
+                    null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseUserDto);
         } else {
-            responseDto.setErrorCode(0);
-            responseDto.setErrorDescription("Ok");
-            responseDto.setResponse(ListUser);
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
+                    HttpStatus.OK.getReasonPhrase(),
+                    listUser);
+            return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
         }
-        return ResponseEntity.ok().body(responseDto);
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<UserDto> getUserByUserId(@PathVariable(name = "userId") Long userId) {
-        User user = userServiceImpl.getUserByUserId(userId);
-
-        if (user != null) {
-            // convert entity to DTO
-            UserDto userResponse = modelMapper.map(user, UserDto.class);
-            return ResponseEntity.ok().body(userResponse);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<ResponseUserDto> getUserByUserId(@PathVariable(name = "userId") Long userId) {
+        ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
+        try {
+            User user = userServiceImpl.getUserByUserId(userId);
+            if (user == null) {
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.NOT_FOUND.value(),
+                        HttpStatus.NOT_FOUND.getReasonPhrase(),
+                        null);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseUserDto);
+            } else {
+                List<User> ListUser = new ArrayList<User>();
+                ListUser.add(modelMapper.map(user, User.class));
+                responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
+                        HttpStatus.OK.getReasonPhrase(),
+                        ListUser);
+                return ResponseEntity.status(HttpStatus.OK).body(responseUserDto);
+            }
+        } catch (ResourceNotFoundException e) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase() + " - " + e,
+                    null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
         }
     }
 
     @PostMapping("/user")
-    public ResponseEntity<UserDto> saveUser(@RequestBody UserDto userDto) {
-        // convert DTO to entity
-        User userRequest = modelMapper.map(userDto, User.class);
-        User user = userServiceImpl.saveUser(userRequest);
+    public ResponseEntity<ResponseUserDto> saveUser(@RequestBody UserDto userDto) {
+        ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
+        User user = userServiceImpl.saveUser(modelMapper.map(userDto, User.class));
 
-        if (user != null) {
-            // convert entity to DTO
-            UserDto userResponse = modelMapper.map(user, UserDto.class);
-            return new ResponseEntity<UserDto>(userResponse, HttpStatus.CREATED);
+        if (user == null) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.BAD_REQUEST.value(),
+                    HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                    null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseUserDto);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            List<User> ListUser = new ArrayList<User>();
+            ListUser.add(user);
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.CREATED.value(),
+                    HttpStatus.CREATED.getReasonPhrase(),
+                    ListUser);
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseUserDto);
         }
     }
 
-    // change the request for DTO
-    // change the response for DTO
     @PutMapping("/user/{userId}")
-    public ResponseEntity<UserDto> updateUser(@PathVariable(name = "userId") Long userId,
+    public ResponseEntity<ResponseUserDto> updateUser(@PathVariable(name = "userId") Long userId,
             @RequestBody UserDto userDto) {
-        // convert DTO to Entity
-        User userRequest = modelMapper.map(userDto, User.class);
-        User user = userServiceImpl.updateUser(userRequest, userId);
+        ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
+        User user = userServiceImpl.updateUser(modelMapper.map(userDto, User.class), userId);
 
-        if (user != null) {
-            // entity to DTO
-            UserDto userResponse = modelMapper.map(user, UserDto.class);
-            return ResponseEntity.ok().body(userResponse);
+        if (user == null) {
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.BAD_REQUEST.value(),
+                    HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                    null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseUserDto);
         } else {
-            return ResponseEntity.badRequest().body(null);
+            List<User> ListUser = new ArrayList<User>();
+            ListUser.add(user);
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
+                    HttpStatus.ACCEPTED.getReasonPhrase(),
+                    ListUser);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
         }
     }
 
     @DeleteMapping("/user/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable(name = "userId") Long userId) {
+    public ResponseEntity<ResponseUserDto> deleteUser(@PathVariable(name = "userId") Long userId) {
+        ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
         if (userServiceImpl.deleteUser(userId)) {
-            return new ResponseEntity<String>("User deleted successfully!.", HttpStatus.OK);
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.ACCEPTED.value(),
+                    HttpStatus.ACCEPTED.getReasonPhrase() + " - User deleted successfully!",
+                    null);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseUserDto);
         } else {
-            return new ResponseEntity<String>("User deleted failed!.", HttpStatus.EXPECTATION_FAILED);
+            responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase() + " - User deleted failed!",
+                    null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseUserDto);
+        }
+    }
+
+    private ResponseUserDto ResponseUserDto(ResponseUserDto responseUserDto, int errorCode, String errorDescription,
+            List<User> listUser) {
+        try {
+            responseUserDto.setErrorCode(errorCode);
+            responseUserDto.setErrorDescription(errorDescription);
+            responseUserDto.setResponse(listUser);
+            return responseUserDto;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

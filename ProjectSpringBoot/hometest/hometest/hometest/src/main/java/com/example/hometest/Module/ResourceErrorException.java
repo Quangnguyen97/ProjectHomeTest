@@ -10,23 +10,46 @@ public class ResourceErrorException extends RuntimeException {
     private String fieldName;
     private Object fieldValue;
 
+    private String message;
+
     public ResourceErrorException(String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s with %s : '%s'", resourceName, fieldName, fieldValue));
+        super(String.format("%s is error with %s : '%s'", resourceName, fieldName, fieldValue));
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
+        this.message = String.format("%s is error with %s : '%s'", resourceName, fieldName, fieldValue);
     }
 
     public String getResourceName() {
         return resourceName;
     }
 
+    public void setResourceName(String resourceName) {
+        this.resourceName = resourceName;
+    }
+
     public String getFieldName() {
         return fieldName;
     }
 
+    public void setFieldName(String fieldName) {
+        this.fieldName = fieldName;
+    }
+
     public Object getFieldValue() {
         return fieldValue;
+    }
+
+    public void setFieldValue(Object fieldValue) {
+        this.fieldValue = fieldValue;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public ResourceErrorException() {
@@ -35,10 +58,12 @@ public class ResourceErrorException extends RuntimeException {
 
     public ResourceErrorException(String message, Throwable cause) {
         super(message, cause);
+        this.message = message;
     }
 
     public ResourceErrorException(String message) {
         super(message);
+        this.message = message;
     }
 
     public ResourceErrorException(Throwable cause) {

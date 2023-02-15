@@ -35,13 +35,13 @@ public class UserServiceImpl implements UserService {
             }
 
             // Check data exists
-            if (userRepository.findById(UserId) == null) {
+            if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
             }
 
             return userRepository.findById(UserId).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "userId", UserId));
+                    () -> new ResourceNotFoundException("User", "UserId", UserId));
         } catch (Exception e) {
             new ResourceErrorException("Exception", "Error", e);
             return null;
@@ -121,13 +121,13 @@ public class UserServiceImpl implements UserService {
                         String.format("%s is different data with %s : '%s'", "User", "UserId",
                                 String.valueOf(UserId) + " - " + String.valueOf(user.getUserId())));
                 return null;
-            } else if (userRepository.findById(UserId) == null) {
+            } else if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
             }
 
             User existingUser = userRepository.findById(UserId).orElseThrow(
-                    () -> new ResourceNotFoundException("User", "userId", UserId));
+                    () -> new ResourceNotFoundException("User", "UserId", UserId));
             existingUser.setFullName(user.getFullName());
             existingUser.setPassword(user.getPassword());
             existingUser.setNotificationToken(user.getNotificationToken());
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
             }
 
             // Check data exists
-            if (userRepository.findById(UserId) == null) {
+            if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return false;
             }

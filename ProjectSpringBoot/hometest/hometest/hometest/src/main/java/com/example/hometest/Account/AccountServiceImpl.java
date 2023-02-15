@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
             }
 
             // Check data exists
-            if (accountRepository.findByUserId(UserId).isEmpty()) {
+            if (accountRepository.findByUserId(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
             }
@@ -56,10 +56,10 @@ public class AccountServiceImpl implements AccountService {
             }
 
             // Check data exists
-            if (accountRepository.findByUserId(UserId).isEmpty()) {
+            if (accountRepository.findByUserId(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("ListAccount", "UserId", String.valueOf(UserId));
                 return null;
-            } else if (accountRepository.findByUserId(AccountNumber) == null) {
+            } else if (accountRepository.findByUserId(AccountNumber).isEmpty() == true) {
                 new ResourceNotFoundException("Account", "AccountNumber", String.valueOf(AccountNumber));
                 return null;
             }
@@ -99,7 +99,7 @@ public class AccountServiceImpl implements AccountService {
                         String.format("%s is different data with %s : '%s'", "Account", "UserId",
                                 String.valueOf(UserId) + " - " + String.valueOf(account.getUserId())));
                 return null;
-            } else if (userRepository.findById(UserId) == null) {
+            } else if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findById(account.getAccountNumber()).isEmpty() == false) {
@@ -144,7 +144,7 @@ public class AccountServiceImpl implements AccountService {
                         String.format("%s is different data with %s : '%s'", "Account", "AccountNumber",
                                 String.valueOf(AccountNumber) + " - " + String.valueOf(account.getAccountNumber())));
                 return null;
-            } else if (userRepository.findById(UserId) == null) {
+            } else if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return null;
             } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
@@ -179,7 +179,7 @@ public class AccountServiceImpl implements AccountService {
             }
 
             // Check data exists
-            if (userRepository.findById(UserId) == null) {
+            if (userRepository.findById(UserId).isEmpty() == true) {
                 new ResourceNotFoundException("User", "UserId", String.valueOf(UserId));
                 return false;
             } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
