@@ -12,7 +12,6 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private AccountRepository accountRepository;
-    private ResourceValidString resourceValidString;
 
     public UserServiceImpl(UserRepository userRepository, AccountRepository accountRepository) {
         super();
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserId(long UserId) {
         try {
             // Check error field
-            if (resourceValidString.StringIsError(String.valueOf(UserId))) {
+            if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
             }
@@ -61,16 +60,16 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "User", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "FullName", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "Password", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "NotificationToken", "null"));
             }
@@ -95,17 +94,17 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "User", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(UserId))
-                    || resourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(UserId))
+                    || ResourceValidString.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "FullName", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getPassword()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "Password", "null"));
-            } else if (resourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
+            } else if (ResourceValidString.StringIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "NotificationToken", "null"));
             }
@@ -139,7 +138,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(long UserId) {
         try {
             // Check error field
-            if (resourceValidString.StringIsError(String.valueOf(UserId))) {
+            if (ResourceValidString.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "UserId", "null"));
             }
