@@ -1,6 +1,7 @@
 package com.example.hometest.BasicAuthen;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +29,10 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
         response.setContentType("application/json");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         PrintWriter writer = response.getWriter();
-        writer.println("{\"status\":" + SC_UNAUTHORIZED + ", \"message\":\"" + authException.getMessage() + "\"}");
+        writer.println(
+                "{\"errorCode\":"
+                        + HttpServletResponse.SC_UNAUTHORIZED
+                        + ", \"errorDescription\":\""
+                        + authException.getMessage() + "\"}");
     }
 }
