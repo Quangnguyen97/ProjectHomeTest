@@ -3,6 +3,7 @@ package com.example.hometest.User;
 import java.util.Objects;
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,9 +28,6 @@ import com.example.hometest.Account.*;
 @NoArgsConstructor
 public class User {
 
-    @OneToMany(mappedBy = "user")
-    private Set<Account> account;
-
     @NotNull
     @Min(value = 1)
     @Column(name = "user_id")
@@ -49,6 +47,9 @@ public class User {
     @NotEmpty(message = "notificationToken must not be empty")
     @Column(name = "notification_token")
     private String notificationToken;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Account> account;
 
     public User(long userId, String fullName, String passWord, String notificationToken) {
         super();

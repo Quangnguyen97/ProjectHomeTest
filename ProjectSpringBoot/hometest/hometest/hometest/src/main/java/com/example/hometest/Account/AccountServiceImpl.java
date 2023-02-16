@@ -2,6 +2,7 @@ package com.example.hometest.Account;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import com.example.hometest.User.*;
 import com.example.hometest.Module.*;
@@ -79,9 +80,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber)
-                            .getAccountNumber()))) {
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));
@@ -96,6 +95,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Account saveAccount(long UserId, Account account) {
         try {
             // Check error field
@@ -138,9 +138,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s have exist with field %s:'%s'", "Account", "accountNumber",
                                 String.valueOf(account.getAccountNumber())));
-            } else if (!ResourceValidObject.StringIsError(String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, account.getAccountNumber())
-                            .getAccountNumber()))) {
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, account.getAccountNumber()) != null) {
                 throw new ResourceRuntimeException(
                         String.format("%s have exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(account.getAccountNumber())));
@@ -153,6 +151,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public Account updateAccount(long UserId, Account account, long AccountNumber) {
         try {
             // Check error field
@@ -205,8 +204,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()))) {
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));
@@ -223,6 +221,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public boolean deleteAccount(long UserId, long AccountNumber) {
         try {
             // Check error field
@@ -250,8 +249,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()))) {
+            } else if (accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber) == null) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));

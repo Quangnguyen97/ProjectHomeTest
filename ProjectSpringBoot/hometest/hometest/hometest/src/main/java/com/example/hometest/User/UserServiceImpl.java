@@ -3,6 +3,7 @@ package com.example.hometest.User;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 
 import com.example.hometest.Account.*;
 import com.example.hometest.Module.*;
@@ -57,6 +58,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User saveUser(User user) {
         try {
             // Check error field
@@ -95,6 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public User updateUser(User user, long UserId) {
         try {
             // Check error field
@@ -149,6 +152,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean deleteUser(long UserId) {
         try {
             // Check error field

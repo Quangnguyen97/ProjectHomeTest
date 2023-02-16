@@ -1,10 +1,9 @@
 package com.example.hometest.MapStruct;
 
 import org.mapstruct.Mapper;
-import com.example.hometest.Account.Account;
-import com.example.hometest.Account.AccountDto;
-import com.example.hometest.User.User;
-import com.example.hometest.User.UserDto;
+
+import com.example.hometest.Account.*;
+import com.example.hometest.User.*;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
