@@ -90,7 +90,9 @@ public class UserServiceImpl implements UserService {
                                 String.valueOf(user.getUserId())));
             }
 
-            return userRepository.save(user);
+            User returnUser = userRepository.save(user);
+            userRepository.flush();
+            return returnUser;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
         }
@@ -145,6 +147,7 @@ public class UserServiceImpl implements UserService {
             existingUser.setPassWord(user.getPassWord());
             existingUser.setNotificationToken(user.getNotificationToken());
             userRepository.save(existingUser);
+            userRepository.flush();
             return existingUser;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
@@ -181,6 +184,7 @@ public class UserServiceImpl implements UserService {
             }
 
             userRepository.deleteById(UserId);
+            userRepository.flush();
             return true;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());

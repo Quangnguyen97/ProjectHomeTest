@@ -31,7 +31,6 @@ public class Account {
     private User user;
 
     @NotNull
-    @NotEmpty(message = "userId must not be empty")
     @Min(value = 1)
     @Column(name = "user_id", insertable = false, updatable = false)
     private long userId;
@@ -42,7 +41,6 @@ public class Account {
     private @Id @GeneratedValue long accountNumber;
 
     @NotNull
-    @NotEmpty(message = "balance must not be empty")
     @Column(name = "balance")
     private double balance;
 

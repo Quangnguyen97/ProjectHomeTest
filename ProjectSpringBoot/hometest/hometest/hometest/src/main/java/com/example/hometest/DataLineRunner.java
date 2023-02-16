@@ -3,6 +3,7 @@ package com.example.hometest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import jakarta.transaction.Transactional;
 
 import com.example.hometest.User.*;
 import com.example.hometest.Account.*;
@@ -17,7 +18,13 @@ public class DataLineRunner implements CommandLineRunner {
     @Autowired
     private AccountServiceImpl accountServiceImpl;
 
+    public DataLineRunner(UserServiceImpl userServiceImpl, AccountServiceImpl accountServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
+        this.accountServiceImpl = accountServiceImpl;
+    }
+
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         try {
             userServiceImpl.saveUser(new User(1, "NGUYEN VAN A", "hash1", "token1"));

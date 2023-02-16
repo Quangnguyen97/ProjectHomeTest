@@ -144,7 +144,9 @@ public class AccountServiceImpl implements AccountService {
                                 String.valueOf(UserId), "accountNumber", String.valueOf(account.getAccountNumber())));
             }
 
-            return accountRepository.save(account);
+            Account returnAccount = accountRepository.save(account);
+            accountRepository.flush();
+            return returnAccount;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
         }
@@ -214,6 +216,7 @@ public class AccountServiceImpl implements AccountService {
             existingAccount.setUserId(account.getUserId());
             existingAccount.setBalance(account.getBalance());
             accountRepository.save(existingAccount);
+            accountRepository.flush();
             return existingAccount;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
@@ -256,6 +259,7 @@ public class AccountServiceImpl implements AccountService {
             }
 
             accountRepository.deleteById(AccountNumber);
+            accountRepository.flush();
             return true;
         } catch (Exception e) {
             throw new ResourceRuntimeException(e.getMessage());
