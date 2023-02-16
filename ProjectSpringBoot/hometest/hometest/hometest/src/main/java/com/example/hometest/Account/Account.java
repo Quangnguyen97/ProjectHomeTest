@@ -31,7 +31,7 @@ public class Account {
 
     @NotNull
     @Min(value = 1)
-    @Column(name = "user_id", insertable = false, updatable = false)
+    @Column(name = "user_id", insertable = true, updatable = true)
     private long userId;
 
     @NotNull
