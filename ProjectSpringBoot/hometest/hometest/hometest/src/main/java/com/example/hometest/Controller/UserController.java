@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hometest.User.*;
+
+import jakarta.validation.Valid;
+
 import com.example.hometest.Module.*;
 import com.example.hometest.Response.*;
 
@@ -97,7 +100,7 @@ public class UserController {
 
     @PutMapping("/user/{userId}")
     public ResponseEntity<ResponseUserDto> updateUser(@PathVariable(name = "userId") Long userId,
-            @RequestBody UserDto userDto) {
+            @RequestBody @Valid UserDto userDto) {
         ResponseUserDto responseUserDto = modelMapper.map(Response.class, ResponseUserDto.class);
         try {
             User user = userServiceImpl.updateUser(modelMapper.map(userDto, User.class), userId);

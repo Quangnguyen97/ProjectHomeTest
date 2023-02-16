@@ -6,7 +6,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,11 +19,17 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Account {
+    @NotNull
     @NotEmpty(message = "userId must not be empty")
-
+    @Min(value = 1)
     private @GeneratedValue(strategy = GenerationType.AUTO) long userId;
+
+    @NotNull
+    @NotEmpty(message = "accountNumber must not be empty")
+    @Min(value = 1)
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long accountNumber;
 
+    @NotNull
     @NotEmpty(message = "balance must not be empty")
     private double balance;
 

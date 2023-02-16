@@ -10,7 +10,9 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "Users")
@@ -18,14 +20,20 @@ import javax.validation.constraints.NotEmpty;
 @Setter
 @NoArgsConstructor
 public class User {
+    @NotNull
+    @NotEmpty(message = "userId must not be empty")
+    @Min(value = 1)
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
 
+    @NotNull
     @NotEmpty(message = "fullName must not be empty")
     private String fullName;
 
+    @NotNull
     @NotEmpty(message = "password must not be empty")
     private String password;
 
+    @NotNull
     @NotEmpty(message = "notificationToken must not be empty")
     private String notificationToken;
 
