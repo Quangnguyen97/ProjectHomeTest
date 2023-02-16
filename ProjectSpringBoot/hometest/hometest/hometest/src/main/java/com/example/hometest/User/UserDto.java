@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDto {
-    @JsonProperty("id")
+    @JsonProperty("userId")
     private long userId;
 
     @NotNull
