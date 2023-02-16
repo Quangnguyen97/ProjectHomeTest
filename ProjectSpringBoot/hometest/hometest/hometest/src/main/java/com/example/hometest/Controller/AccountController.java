@@ -40,7 +40,7 @@ public class AccountController {
                     .map(post -> modelMapper.map(post, Account.class))
                     .collect(Collectors.toList());
             if (listAccount.isEmpty()) {
-                throw new ResourceRuntimeException("List account " + HttpStatus.NOT_FOUND.getReasonPhrase());
+                throw new ResourceException("List account " + HttpStatus.NOT_FOUND.getReasonPhrase());
             } else {
                 responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.OK.value(),
                         HttpStatus.OK.getReasonPhrase(), "", listAccount);
@@ -60,7 +60,7 @@ public class AccountController {
         try {
             Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
             if (account == null) {
-                throw new ResourceRuntimeException("Account " + HttpStatus.NOT_FOUND.getReasonPhrase());
+                throw new ResourceException("Account " + HttpStatus.NOT_FOUND.getReasonPhrase());
             } else {
                 List<Account> listAccount = new ArrayList<Account>();
                 listAccount.add(account);
@@ -82,7 +82,7 @@ public class AccountController {
         try {
             Account account = accountServiceImpl.saveAccount(userId, modelMapper.map(accountDto, Account.class));
             if (account == null) {
-                throw new ResourceRuntimeException("Account created failed");
+                throw new ResourceException("Account created failed");
             } else {
                 List<Account> listAccount = new ArrayList<Account>();
                 listAccount.add(account);
@@ -105,7 +105,7 @@ public class AccountController {
             Account account = accountServiceImpl.updateAccount(userId, modelMapper.map(accountDto, Account.class),
                     accountNumber);
             if (account == null) {
-                throw new ResourceRuntimeException("Account updated failed");
+                throw new ResourceException("Account updated failed");
             } else {
                 List<Account> listAccount = new ArrayList<Account>();
                 listAccount.add(account);
@@ -130,7 +130,7 @@ public class AccountController {
                         HttpStatus.ACCEPTED.getReasonPhrase(), "Account deleted successfully", null);
                 return ResponseEntity.status(HttpStatus.ACCEPTED).body(responseAccountDto);
             } else {
-                throw new ResourceRuntimeException("Account deleted failed");
+                throw new ResourceException("Account deleted failed");
             }
         } catch (Exception e) {
             responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
@@ -148,7 +148,7 @@ public class AccountController {
             responseAccountDto.setResponse(listAccount);
             return responseAccountDto;
         } catch (Exception e) {
-            throw new ResourceRuntimeException();
+            throw new ResourceException();
         }
     }
 }

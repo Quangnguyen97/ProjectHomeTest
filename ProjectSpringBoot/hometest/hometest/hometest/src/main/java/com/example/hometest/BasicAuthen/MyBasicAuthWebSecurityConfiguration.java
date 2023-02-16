@@ -29,7 +29,7 @@ public class MyBasicAuthWebSecurityConfiguration {
                     .password(encoder.encode("123456"))
                     .authorities("ROLE_ADMIN");
         } catch (Exception e) {
-            throw new ResourceRuntimeException(e.getMessage());
+            throw new ResourceException(e.getMessage());
         }
     }
 
@@ -49,7 +49,7 @@ public class MyBasicAuthWebSecurityConfiguration {
                     .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
             return httpSecurity.build();
         } catch (Exception e) {
-            throw new ResourceRuntimeException(e.getMessage());
+            throw new ResourceException(e.getMessage());
         }
     }
 }

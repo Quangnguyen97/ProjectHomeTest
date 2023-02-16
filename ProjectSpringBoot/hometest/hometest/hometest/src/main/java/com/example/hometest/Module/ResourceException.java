@@ -1,6 +1,6 @@
 package com.example.hometest.Module;
 
-public class ResourceRuntimeException extends RuntimeException {
+public class ResourceException extends RuntimeException {
 
     private String resourceName;
     private String fieldName;
@@ -8,25 +8,25 @@ public class ResourceRuntimeException extends RuntimeException {
 
     private String message;
 
-    public ResourceRuntimeException() {
+    public ResourceException() {
         super();
     }
 
-    public ResourceRuntimeException(String message, Throwable cause) {
+    public ResourceException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
     }
 
-    public ResourceRuntimeException(String message) {
+    public ResourceException(String message) {
         super(message);
         this.message = message;
     }
 
-    public ResourceRuntimeException(Throwable cause) {
+    public ResourceException(Throwable cause) {
         super(cause);
     }
 
-    public ResourceRuntimeException(String resourceName, String fieldName, Object fieldValue) {
+    public ResourceException(String resourceName, String fieldName, Object fieldValue) {
         super(String.format("%s have exception with %s : '%s'", resourceName, fieldName, fieldValue));
         this.resourceName = resourceName;
         this.fieldName = fieldName;

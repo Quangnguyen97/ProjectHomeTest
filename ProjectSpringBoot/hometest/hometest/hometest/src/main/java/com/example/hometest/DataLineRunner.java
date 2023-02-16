@@ -35,7 +35,7 @@ public class DataLineRunner implements CommandLineRunner {
             accountServiceImpl.saveAccount(2, new Account(2, 20, 200));
             accountServiceImpl.saveAccount(3, new Account(3, 30, 300));
         } catch (Exception e) {
-            throw new ResourceRuntimeException(e.getMessage());
+            throw new ResourceException(e.getMessage());
         }
     }
 }

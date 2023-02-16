@@ -41,7 +41,7 @@ public class MyBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoi
             PrintWriter writer = response.getWriter();
             writer.println(new Gson().toJson(responseDto));
         } catch (Exception e) {
-            throw new ResourceRuntimeException(e.getMessage());
+            throw new ResourceException(e.getMessage());
         }
     }
 }

@@ -38,7 +38,7 @@ public class HometestApplication {
 		try {
 			SpringApplication.run(HometestApplication.class, args);
 		} catch (Exception e) {
-			throw new ResourceRuntimeException(e.getMessage());
+			throw new ResourceException(e.getMessage());
 		}
 	}
 
