@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
@@ -41,14 +40,14 @@ public class Account {
     private @Id @GeneratedValue long accountNumber;
 
     @NotNull
-    @Column(name = "balance")
-    private double balance;
+    @Column(name = "account_balance")
+    private double accountBalance;
 
-    public Account(long userId, long accountNumber, double balance) {
+    public Account(long userId, long accountNumber, double accountBalance) {
         super();
         this.userId = userId;
         this.accountNumber = accountNumber;
-        this.balance = balance;
+        this.accountBalance = accountBalance;
     }
 
     public long getUserId() {
@@ -67,12 +66,12 @@ public class Account {
         this.accountNumber = accountNumber;
     }
 
-    public double getBalance() {
-        return balance;
+    public double getAccountBalance() {
+        return accountBalance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
     }
 
     @Override

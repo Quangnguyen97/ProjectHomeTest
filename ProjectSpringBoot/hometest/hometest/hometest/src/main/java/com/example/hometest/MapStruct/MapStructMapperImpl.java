@@ -19,7 +19,7 @@ public class MapStructMapperImpl implements MapStructMapper {
         AccountDto accountDto = new AccountDto();
         accountDto.setUserId(account.getUserId());
         accountDto.setAccountNumber(account.getAccountNumber());
-        accountDto.setBalance(account.getBalance());
+        accountDto.setAccountBalance(account.getAccountBalance());
         return accountDto;
     }
 

@@ -17,6 +17,6 @@ public class AccountDto {
     private long accountNumber;
 
     @NotNull
-    @JsonProperty("balance")
-    private double balance;
+    @JsonProperty("accountBalance")
+    private double accountBalance;
 }

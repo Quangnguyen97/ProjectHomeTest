@@ -120,7 +120,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(account.getAccountNumber())));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(account.getBalance()))) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(account.getAccountBalance()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "balance", "null"));
             }
@@ -183,7 +183,7 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(account.getAccountNumber())));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(account.getBalance()))) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(account.getAccountBalance()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "Account", "balance", "null"));
             }
@@ -214,7 +214,7 @@ public class AccountServiceImpl implements AccountService {
 
             Account existingAccount = accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber);
             existingAccount.setUserId(account.getUserId());
-            existingAccount.setBalance(account.getBalance());
+            existingAccount.setAccountBalance(account.getAccountBalance());
             accountRepository.save(existingAccount);
             accountRepository.flush();
             return existingAccount;
