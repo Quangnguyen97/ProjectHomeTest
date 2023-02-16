@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.example.hometest.User.*;
 import com.example.hometest.Account.*;
+import com.example.hometest.Module.*;
 
 @Component
 public class DataLineRunner implements CommandLineRunner {
@@ -27,7 +28,7 @@ public class DataLineRunner implements CommandLineRunner {
             accountRepository.save(new Account(2, 20, 200));
             accountRepository.save(new Account(3, 30, 300));
         } catch (Exception e) {
-            new Exception(e);
+            throw new ResourceRuntimeException(e.getMessage());
         }
     }
 }

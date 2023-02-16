@@ -8,6 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.example.hometest.Module.*;
+
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.example.hometest.BasicAuthen" })
 @ComponentScan(basePackages = { "com.example.hometest.Module" })
@@ -36,7 +38,7 @@ public class HometestApplication {
 		try {
 			SpringApplication.run(HometestApplication.class, args);
 		} catch (Exception e) {
-			new Exception(e);
+			throw new ResourceRuntimeException(e.getMessage());
 		}
 	}
 

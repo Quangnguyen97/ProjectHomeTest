@@ -10,6 +10,8 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.example.hometest.Module.*;
+
 @Configuration
 @EnableWebSecurity
 public class MyBasicAuthWebSecurityConfiguration {
@@ -27,23 +29,27 @@ public class MyBasicAuthWebSecurityConfiguration {
                     .password(encoder.encode("123456"))
                     .authorities("ROLE_ADMIN");
         } catch (Exception e) {
-            new Exception(e);
+            throw new ResourceRuntimeException(e.getMessage());
         }
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
-                .csrf().disable()
-                .cors().disable()
-                .httpBasic()
-                .and()
-                .authorizeRequests().requestMatchers("/").permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
-                .and()
-                .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
-        return httpSecurity.build();
+        try {
+            httpSecurity
+                    .csrf().disable()
+                    .cors().disable()
+                    .httpBasic()
+                    .and()
+                    .authorizeRequests().requestMatchers("/").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .formLogin().permitAll()
+                    .and()
+                    .httpBasic().authenticationEntryPoint(authenticationEntryPoint);
+            return httpSecurity.build();
+        } catch (Exception e) {
+            throw new ResourceRuntimeException(e.getMessage());
+        }
     }
 }
