@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserId(long UserId) {
         try {
             // Check error field
-            if (ResourceValid.StrIsError(String.valueOf(UserId)) || UserId < 1) {
+            if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, UserId) || UserId < 1) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             }
@@ -59,16 +59,17 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.REQUEST, "User"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getUserId())) || user.getUserId() < 1) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, user.getUserId())
+                    || user.getUserId() < 1) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getFullName()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getFullName())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "fullName"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getPassWord()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getPassWord())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "password"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getNotificationToken()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getNotificationToken())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "notificationToken"));
             }
@@ -95,18 +96,18 @@ public class UserServiceImpl implements UserService {
             if (user == null) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.REQUEST, "User"));
-            } else if (ResourceValid.StrIsError(String.valueOf(UserId))
-                    || ResourceValid.StrIsError(String.valueOf(user.getUserId()))
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, UserId)
+                    || ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, user.getUserId())
                     || UserId < 1 || user.getUserId() < 1) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getFullName()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getFullName())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "fullName"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getPassWord()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getPassWord())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "password"));
-            } else if (ResourceValid.StrIsError(String.valueOf(user.getNotificationToken()))) {
+            } else if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.STRING, user.getNotificationToken())) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "notificationToken"));
             }
@@ -138,7 +139,7 @@ public class UserServiceImpl implements UserService {
     public boolean deleteUser(long UserId) {
         try {
             // Check error field
-            if (ResourceValid.StrIsError(String.valueOf(UserId)) || UserId < 1) {
+            if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, UserId) || UserId < 1) {
                 throw new ResourceException(
                         ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             }

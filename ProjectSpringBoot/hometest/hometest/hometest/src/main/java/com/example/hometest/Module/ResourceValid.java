@@ -1,28 +1,33 @@
 package com.example.hometest.Module;
 
+import java.util.Date;
 import com.google.common.base.Strings;
 
 public class ResourceValid {
 
     public enum typeOBJECT {
-        STRING, DATE, NUMBER, BOOLEAN, SYMBOL
+        STRING, DATE, LONG, INTEGER, FLOAT, DOUBLE, BOOLEAN
     }
 
     public static boolean TypeIsError(typeOBJECT typeObject, Object Value) {
         try {
             switch (typeObject) {
                 case STRING:
-                    return Value.getClass().getSimpleName() != "string";
+                    return Value.getClass().getSimpleName() != String.class.getSimpleName();
                 case DATE:
-                    return Value.getClass().getSimpleName() != "date";
-                case NUMBER:
-                    return Value.getClass().getSimpleName() != "number";
+                    return Value.getClass().getSimpleName() != Date.class.getSimpleName();
+                case LONG:
+                    return Value.getClass().getSimpleName() != Long.class.getSimpleName();
+                case INTEGER:
+                    return Value.getClass().getSimpleName() != Integer.class.getSimpleName();
+                case FLOAT:
+                    return Value.getClass().getSimpleName() != Float.class.getSimpleName();
+                case DOUBLE:
+                    return Value.getClass().getSimpleName() != Double.class.getSimpleName();
                 case BOOLEAN:
-                    return Value.getClass().getSimpleName() != "boolean";
-                case SYMBOL:
-                    return Value.getClass().getSimpleName() != "symbol";
+                    return Value.getClass().getSimpleName() != Boolean.class.getSimpleName();
                 default:
-                    return Value.getClass().getSimpleName() != "undefined";
+                    return Value.getClass().getSimpleName() != Object.class.getSimpleName();
             }
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
