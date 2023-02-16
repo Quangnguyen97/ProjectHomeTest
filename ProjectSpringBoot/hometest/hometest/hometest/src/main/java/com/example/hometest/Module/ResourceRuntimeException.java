@@ -27,11 +27,11 @@ public class ResourceRuntimeException extends RuntimeException {
     }
 
     public ResourceRuntimeException(String resourceName, String fieldName, Object fieldValue) {
-        super(String.format("%s have exception with param %s : '%s'", resourceName, fieldName, fieldValue));
+        super(String.format("%s have exception with %s : '%s'", resourceName, fieldName, fieldValue));
         this.resourceName = resourceName;
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
-        this.message = String.format("%s have exception with param %s : '%s'", resourceName, fieldName, fieldValue);
+        this.message = String.format("%s have exception with %s : '%s'", resourceName, fieldName, fieldValue);
     }
 
     public String getResourceName() {

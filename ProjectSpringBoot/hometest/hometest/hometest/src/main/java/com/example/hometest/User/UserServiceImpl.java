@@ -33,19 +33,15 @@ public class UserServiceImpl implements UserService {
     public User getUserByUserId(long UserId) {
         try {
             // Check error field
-            if (ResourceValidObject.StringIsError(String.valueOf(UserId))) {
+            if (ResourceValidObject.StringIsError(String.valueOf(UserId)) || UserId < 1) {
                 throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "userId", "null"));
-            } else if (UserId < 1) {
-                throw new ResourceRuntimeException(
-                        String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
+                        ResourceValidObject.StringErrorField(ResourceValidObject.TypeString.errorField, "userId"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceRuntimeException(
-                        String.format("%s does not exist with field %s='%s'", "User", "userId",
-                                String.valueOf(UserId)));
+                        ResourceValidObject.StringErrorField(ResourceValidObject.TypeString.dataNotExist, "userId"));
             }
 
             return userRepository.findById(UserId).orElseThrow(

@@ -81,7 +81,7 @@ public class AccountController {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
             Account account = accountServiceImpl.saveAccount(userId, modelMapper.map(accountDto, Account.class));
-            if (account != null) {
+            if (account == null) {
                 throw new ResourceRuntimeException("Account created failed");
             } else {
                 List<Account> listAccount = new ArrayList<Account>();
