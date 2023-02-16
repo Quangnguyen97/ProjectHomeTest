@@ -20,12 +20,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Account {
     @NotNull
-    @NotEmpty(message = "userId must not be empty")
     @Min(value = 1)
-    private @GeneratedValue(strategy = GenerationType.AUTO) long userId;
+    private long userId;
 
     @NotNull
-    @NotEmpty(message = "accountNumber must not be empty")
     @Min(value = 1)
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long accountNumber;
 

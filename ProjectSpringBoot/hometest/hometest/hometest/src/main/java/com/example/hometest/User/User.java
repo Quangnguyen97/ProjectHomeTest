@@ -21,7 +21,6 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 public class User {
     @NotNull
-    @NotEmpty(message = "userId must not be empty")
     @Min(value = 1)
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
 

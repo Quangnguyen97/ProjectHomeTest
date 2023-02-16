@@ -43,7 +43,7 @@ public class UserController {
                     .map(post -> modelMapper.map(post, User.class))
                     .collect(Collectors.toList());
             if (listUser.isEmpty()) {
-                throw new ResourceRuntimeException("list user " + HttpStatus.EXPECTATION_FAILED.getReasonPhrase());
+                throw new ResourceRuntimeException("List user " + HttpStatus.NOT_FOUND.getReasonPhrase());
             } else {
                 responseUserDto = ResponseUserDto(responseUserDto, HttpStatus.OK.value(),
                         HttpStatus.OK.getReasonPhrase(), "", listUser);
@@ -62,7 +62,7 @@ public class UserController {
         try {
             User user = userServiceImpl.getUserByUserId(userId);
             if (user == null) {
-                throw new ResourceRuntimeException("User " + HttpStatus.EXPECTATION_FAILED.getReasonPhrase());
+                throw new ResourceRuntimeException("User " + HttpStatus.NOT_FOUND.getReasonPhrase());
             } else {
                 List<User> listUser = new ArrayList<User>();
                 listUser.add(user);
