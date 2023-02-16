@@ -1,15 +1,12 @@
 package com.example.hometest.User;
 
 import java.util.Objects;
-import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,8 +15,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.example.hometest.Account.*;
 
 @Entity
 @Table(name = "tbl_User")
@@ -30,7 +25,7 @@ public class User {
 
     @NotNull
     @Min(value = 1)
-    @Column(name = "user_id")
+    @Column(name = "id")
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
 
     @NotNull
@@ -47,9 +42,6 @@ public class User {
     @NotEmpty(message = "notificationToken must not be empty")
     @Column(name = "notification_token")
     private String notificationToken;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Account> account;
 
     public User(long userId, String fullName, String passWord, String notificationToken) {
         super();

@@ -30,7 +30,4 @@ public class UserDto {
     @NotEmpty(message = "notificationToken must not be empty")
     @JsonProperty("notificationToken")
     private String notificationToken;
-
-    @JsonProperty("account")
-    private Set<AccountDto> account;
 }

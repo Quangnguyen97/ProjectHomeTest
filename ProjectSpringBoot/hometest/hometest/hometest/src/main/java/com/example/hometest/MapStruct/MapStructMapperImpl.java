@@ -1,7 +1,5 @@
 package com.example.hometest.MapStruct;
 
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.Generated;
 
@@ -34,17 +32,5 @@ public class MapStructMapperImpl implements MapStructMapper {
         userDto.setPassword(user.getPassWord());
         userDto.setNotificationToken(user.getNotificationToken());
         return userDto;
-    }
-
-    protected Set<Account> authorSetToAuthorDtoSet(Set<Account> setAccount) {
-        if (setAccount == null) {
-            return null;
-        }
-        Set<Account> newSetAccount = new HashSet<Account>(
-                Math.max((int) (setAccount.size() / .75f) + 1, 16));
-        for (Account account : setAccount) {
-            newSetAccount.add(account);
-        }
-        return newSetAccount;
     }
 }

@@ -7,6 +7,7 @@ import com.example.hometest.User.*;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper {
+
     AccountDto accountDto(Account account);
 
     UserDto userDto(User user);
