@@ -8,7 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hometest.Account.*;
 import com.example.hometest.Module.*;
 import com.example.hometest.Response.*;
+
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class AccountController {
@@ -132,6 +136,21 @@ public class AccountController {
             } else {
                 throw new ResourceException("Account deleted failed");
             }
+        } catch (Exception e) {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
+                    HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
+        }
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseAccountDto> HandleHttpMessageException(
+            HttpMessageNotReadableException exception) {
+        ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
+        try {
+            responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.BAD_REQUEST.value(),
+                    HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(responseAccountDto);
         } catch (Exception e) {
             responseAccountDto = ResponseAccountDto(responseAccountDto, HttpStatus.EXPECTATION_FAILED.value(),
                     HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
