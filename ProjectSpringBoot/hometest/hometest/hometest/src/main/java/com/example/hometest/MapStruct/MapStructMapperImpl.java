@@ -30,7 +30,7 @@ public class MapStructMapperImpl implements MapStructMapper {
         UserDto userDto = new UserDto();
         userDto.setUserId(user.getUserId());
         userDto.setFullName(user.getFullName());
-        userDto.setPassword(user.getPassword());
+        userDto.setPassword(user.getPassWord());
         userDto.setNotificationToken(user.getNotificationToken());
         return userDto;
     }

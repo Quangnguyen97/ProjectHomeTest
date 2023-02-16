@@ -2,45 +2,51 @@ package com.example.hometest.User;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
-@Table(name = "Users")
+@Table(name = "tbl_User")
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
     @NotNull
     @Min(value = 1)
+    @Column(name = "user_id")
     private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
 
     @NotNull
     @NotEmpty(message = "fullName must not be empty")
+    @Column(name = "full_name")
     private String fullName;
 
     @NotNull
-    @NotEmpty(message = "password must not be empty")
-    private String password;
+    @NotEmpty(message = "passWord must not be empty")
+    @Column(name = "pass_word")
+    private String passWord;
 
     @NotNull
     @NotEmpty(message = "notificationToken must not be empty")
+    @Column(name = "notification_token")
     private String notificationToken;
 
-    public User(long userId, String fullName, String password, String notificationToken) {
+    public User(long userId, String fullName, String passWord, String notificationToken) {
         super();
         this.userId = userId;
         this.fullName = fullName;
-        this.password = password;
+        this.passWord = passWord;
         this.notificationToken = notificationToken;
     }
 
@@ -60,12 +66,12 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPassWord() {
+        return passWord;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassWord(String passWord) {
+        this.passWord = passWord;
     }
 
     public String getNotificationToken() {

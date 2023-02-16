@@ -16,7 +16,6 @@ public class AccountServiceImpl implements AccountService {
         super();
         this.userRepository = userRepository;
         this.accountRepository = accountRepository;
-
     }
 
     @Override

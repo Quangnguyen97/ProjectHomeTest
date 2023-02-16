@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
             } else if (ResourceValidObject.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(user.getPassword()))) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(user.getPassWord()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "password", "null"));
             } else if (ResourceValidObject.StringIsError(String.valueOf(user.getNotificationToken()))) {
@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService {
             } else if (ResourceValidObject.StringIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "fullName", "null"));
-            } else if (ResourceValidObject.StringIsError(String.valueOf(user.getPassword()))) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(user.getPassWord()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "password", "null"));
             } else if (ResourceValidObject.StringIsError(String.valueOf(user.getNotificationToken()))) {
@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
                             String.format("%s does not exist with field %s='%s'", "User", "userId",
                                     String.valueOf(UserId))));
             existingUser.setFullName(user.getFullName());
-            existingUser.setPassword(user.getPassword());
+            existingUser.setPassWord(user.getPassWord());
             existingUser.setNotificationToken(user.getNotificationToken());
             userRepository.save(existingUser);
             return existingUser;
