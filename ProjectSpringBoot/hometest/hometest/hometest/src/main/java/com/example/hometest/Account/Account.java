@@ -4,7 +4,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -29,7 +28,7 @@ public class Account {
     @NotNull
     @Min(value = 1)
     @Column(name = "account_number")
-    private @Id @GeneratedValue long accountNumber;
+    private @Id long accountNumber;
 
     @NotNull
     @Column(name = "account_balance")

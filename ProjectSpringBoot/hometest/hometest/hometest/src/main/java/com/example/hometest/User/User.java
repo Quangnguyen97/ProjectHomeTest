@@ -4,8 +4,6 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -26,7 +24,7 @@ public class User {
     @NotNull
     @Min(value = 1)
     @Column(name = "id")
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) long userId;
+    private @Id long userId;
 
     @NotNull
     @NotEmpty(message = "fullName must not be empty")

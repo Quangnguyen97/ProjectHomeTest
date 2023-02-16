@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
             if (ResourceValidObject.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
-            } else if (UserId < 0) {
+            } else if (UserId < 1) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
             }
@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
             } else if (ResourceValidObject.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
-            } else if (user.getUserId() < 0) {
+            } else if (user.getUserId() < 1) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId",
                                 String.valueOf(user.getUserId())));
@@ -110,10 +110,10 @@ public class UserServiceImpl implements UserService {
                     || ResourceValidObject.StringIsError(String.valueOf(user.getUserId()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
-            } else if (UserId < 0) {
+            } else if (UserId < 1) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
-            } else if (user.getUserId() < 0) {
+            } else if (user.getUserId() < 1) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId",
                                 String.valueOf(user.getUserId())));
@@ -162,7 +162,7 @@ public class UserServiceImpl implements UserService {
             if (ResourceValidObject.StringIsError(String.valueOf(UserId))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", "null"));
-            } else if (UserId < 0) {
+            } else if (UserId < 1) {
                 throw new ResourceRuntimeException(
                         String.format("%s have error with field %s='%s'", "User", "userId", String.valueOf(UserId)));
             }
