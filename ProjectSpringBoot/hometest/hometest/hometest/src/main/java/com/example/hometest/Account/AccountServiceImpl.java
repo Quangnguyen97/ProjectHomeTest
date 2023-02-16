@@ -79,8 +79,9 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()) == null) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(
+                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber)
+                            .getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));
@@ -137,9 +138,9 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s have exist with field %s:'%s'", "Account", "accountNumber",
                                 String.valueOf(account.getAccountNumber())));
-            } else if (String.valueOf(
+            } else if (!ResourceValidObject.StringIsError(String.valueOf(
                     accountRepository.findByUserIdAndAccountNumber(UserId, account.getAccountNumber())
-                            .getAccountNumber()) != null) {
+                            .getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s have exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(account.getAccountNumber())));
@@ -204,8 +205,8 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()) == null) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(
+                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));
@@ -249,8 +250,8 @@ public class AccountServiceImpl implements AccountService {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s'", "Account", "accountNumber",
                                 String.valueOf(AccountNumber)));
-            } else if (String.valueOf(
-                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()) == null) {
+            } else if (ResourceValidObject.StringIsError(String.valueOf(
+                    accountRepository.findByUserIdAndAccountNumber(UserId, AccountNumber).getAccountNumber()))) {
                 throw new ResourceRuntimeException(
                         String.format("%s does not exist with field %s='%s' and %s='%s'", "Account", "userId",
                                 String.valueOf(UserId), "accountNumber", String.valueOf(AccountNumber)));

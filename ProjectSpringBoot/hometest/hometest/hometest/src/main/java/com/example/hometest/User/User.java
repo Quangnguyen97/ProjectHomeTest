@@ -1,12 +1,14 @@
 package com.example.hometest.User;
 
 import java.util.Objects;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,12 +18,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.example.hometest.Account.*;
+
 @Entity
 @Table(name = "tbl_User")
 @Getter
 @Setter
 @NoArgsConstructor
 public class User {
+
+    @OneToMany(mappedBy = "user")
+    private Set<Account> account;
+
     @NotNull
     @Min(value = 1)
     @Column(name = "user_id")

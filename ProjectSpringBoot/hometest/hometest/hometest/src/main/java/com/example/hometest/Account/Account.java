@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -16,22 +18,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.example.hometest.User.*;
+
 @Entity
 @Table(name = "tbl_Account")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Account {
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
     @NotNull
     @NotEmpty(message = "userId must not be empty")
     @Min(value = 1)
-    @Column(name = "user_id")
+    @Column(name = "user_id", insertable = false, updatable = false)
     private long userId;
 
     @NotNull
     @Min(value = 1)
     @Column(name = "account_number")
-    private @Id @GeneratedValue(strategy = GenerationType.AUTO) long accountNumber;
+    private @Id @GeneratedValue long accountNumber;
 
     @NotNull
     @NotEmpty(message = "balance must not be empty")
