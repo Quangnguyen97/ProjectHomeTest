@@ -35,17 +35,17 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (ResourceValid.StrIsError(String.valueOf(UserId)) || UserId < 1) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.NOTEXISTED, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.NOTEXISTED, "userId"));
             }
 
             return userRepository.findById(UserId).orElseThrow(() -> new ResourceException(
-                    ResourceValid.StringError(ResourceValid.TypeString.NOTEXISTED, "userId")));
+                    ResourceValid.StringError(ResourceValid.typeERROR.NOTEXISTED, "userId")));
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
         }
@@ -58,25 +58,25 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (user == null) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.REQUEST, "User"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.REQUEST, "User"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getUserId())) || user.getUserId() < 1) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "fullName"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "fullName"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getPassWord()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "password"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "password"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "notificationToken"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "notificationToken"));
             }
 
             // Check data exists
             if (userRepository.findById(user.getUserId()).isEmpty() == false) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.EXISTED, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.EXISTED, "userId"));
             }
 
             User returnUser = userRepository.save(user);
@@ -94,34 +94,34 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (user == null) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.REQUEST, "User"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.REQUEST, "User"));
             } else if (ResourceValid.StrIsError(String.valueOf(UserId))
                     || ResourceValid.StrIsError(String.valueOf(user.getUserId()))
                     || UserId < 1 || user.getUserId() < 1) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getFullName()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "fullName"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "fullName"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getPassWord()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "password"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "password"));
             } else if (ResourceValid.StrIsError(String.valueOf(user.getNotificationToken()))) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "notificationToken"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "notificationToken"));
             }
 
             // Check data exists
             if (UserId != user.getUserId()) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.DIFFERENT, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.DIFFERENT, "userId"));
             } else if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.NOTEXISTED, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.NOTEXISTED, "userId"));
             }
 
             User existingUser = userRepository.findById(UserId).orElseThrow(() -> new ResourceException(
-                    ResourceValid.StringError(ResourceValid.TypeString.NOTEXISTED, "userId")));
+                    ResourceValid.StringError(ResourceValid.typeERROR.NOTEXISTED, "userId")));
             existingUser.setFullName(user.getFullName());
             existingUser.setPassWord(user.getPassWord());
             existingUser.setNotificationToken(user.getNotificationToken());
@@ -140,13 +140,13 @@ public class UserServiceImpl implements UserService {
             // Check error field
             if (ResourceValid.StrIsError(String.valueOf(UserId)) || UserId < 1) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.FIELD, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.FIELD, "userId"));
             }
 
             // Check data exists
             if (userRepository.findById(UserId).isEmpty() == true) {
                 throw new ResourceException(
-                        ResourceValid.StringError(ResourceValid.TypeString.NOTEXISTED, "userId"));
+                        ResourceValid.StringError(ResourceValid.typeERROR.NOTEXISTED, "userId"));
             }
 
             // Check account exists

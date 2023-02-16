@@ -3,22 +3,53 @@ package com.example.hometest.Module;
 import com.google.common.base.Strings;
 
 public class ResourceValid {
-    public static boolean StrIsError(String string) {
+
+    public enum typeOBJECT {
+        STRING, DATE, NUMBER, BOOLEAN, SYMBOL
+    }
+
+    public static boolean TypeIsError(typeOBJECT typeObject, Object Value) {
         try {
-            if (Strings.isNullOrEmpty(string) || string == "null" || string.trim() == "NULL") {
-                return true;
+            switch (typeObject) {
+                case STRING:
+                    return Value.getClass().getSimpleName() != "string";
+                case DATE:
+                    return Value.getClass().getSimpleName() != "date";
+                case NUMBER:
+                    return Value.getClass().getSimpleName() != "number";
+                case BOOLEAN:
+                    return Value.getClass().getSimpleName() != "boolean";
+                case SYMBOL:
+                    return Value.getClass().getSimpleName() != "symbol";
+                default:
+                    return Value.getClass().getSimpleName() != "undefined";
             }
-            return false;
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
         }
     }
 
-    public enum TypeString {
+    public static boolean StrIsError(String string) {
+        try {
+            return Strings.isNullOrEmpty(string) || string == "null" || string.trim() == "NULL";
+        } catch (Exception e) {
+            throw new ResourceException(e.getMessage());
+        }
+    }
+
+    public static boolean ObjectIsError(typeOBJECT typeObject, Object Value) {
+        try {
+            return StrIsError(String.valueOf((Value))) || TypeIsError(typeObject, Value);
+        } catch (Exception e) {
+            throw new ResourceException(e.getMessage());
+        }
+    }
+
+    public enum typeERROR {
         REQUEST, FIELD, DIFFERENT, NOTEXISTED, EXISTED
     }
 
-    public static String StringError(TypeString typeString, String resourceName) {
+    public static String StringError(typeERROR typeString, String resourceName) {
         try {
             switch (typeString) {
                 case REQUEST:
