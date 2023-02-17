@@ -25,8 +25,11 @@ import com.example.hometest.Response.*;
 
 @RestController
 public class AccountController {
+
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
     private AccountServiceImpl accountServiceImpl;
 
     public AccountController(AccountServiceImpl accountServiceImpl) {

@@ -19,7 +19,7 @@ public class Notification {
 
     @NotNull
     @Min(value = 1)
-    @Column(name = "notification_userid")
+    @Column(name = "notification_user_id")
     private long userId;
 
     @NotNull

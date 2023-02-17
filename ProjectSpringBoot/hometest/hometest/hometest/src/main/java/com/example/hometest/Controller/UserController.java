@@ -25,8 +25,11 @@ import com.example.hometest.Response.*;
 
 @RestController
 public class UserController {
+
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
     private UserServiceImpl userServiceImpl;
 
     public UserController(UserServiceImpl userServiceImpl) {
