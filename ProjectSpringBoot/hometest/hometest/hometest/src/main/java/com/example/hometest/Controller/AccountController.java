@@ -3,6 +3,7 @@ package com.example.hometest.Controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import jakarta.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hometest.Account.*;
 import com.example.hometest.Module.*;
 import com.example.hometest.Response.*;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 public class AccountController {
@@ -81,7 +80,7 @@ public class AccountController {
 
     @PostMapping("/user/{userId}/account")
     public ResponseEntity<ResponseAccountDto> saveAccount(@PathVariable(name = "userId") long userId,
-            @RequestBody AccountDto accountDto) {
+            @RequestBody @Valid AccountDto accountDto) {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
             Account account = accountServiceImpl.saveAccount(userId, modelMapper.map(accountDto, Account.class));
@@ -103,7 +102,7 @@ public class AccountController {
 
     @PutMapping("/user/{userId}/account/{accountNumber}")
     public ResponseEntity<ResponseAccountDto> updateAccount(@PathVariable(name = "userId") long userId,
-            @RequestBody AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
+            @RequestBody @Valid AccountDto accountDto, @PathVariable(name = "accountNumber") int accountNumber) {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
             Account account = accountServiceImpl.updateAccount(userId, modelMapper.map(accountDto, Account.class),
@@ -144,7 +143,7 @@ public class AccountController {
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ResponseAccountDto> HandleHttpMessageException(
+    private ResponseEntity<ResponseAccountDto> HandleHttpMessageException(
             HttpMessageNotReadableException exception) {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
