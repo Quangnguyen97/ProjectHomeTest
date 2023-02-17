@@ -1,6 +1,8 @@
 package com.example.hometest.Account;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 
@@ -10,7 +12,10 @@ import com.example.hometest.Module.*;
 @Service
 public class AccountServiceImpl implements AccountService {
 
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private AccountRepository accountRepository;
 
     public AccountServiceImpl(UserRepository userRepository, AccountRepository accountRepository) {

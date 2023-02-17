@@ -1,6 +1,8 @@
 package com.example.hometest.Notification;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.hometest.Module.*;
@@ -8,6 +10,7 @@ import com.example.hometest.Module.*;
 @Service
 public class NotificationServiceImpl implements NotificationService {
 
+    @Autowired
     private NotificationRepository notificationRepository;
 
     public NotificationServiceImpl(NotificationRepository notificationRepository) {

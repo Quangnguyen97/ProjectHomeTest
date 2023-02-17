@@ -15,7 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                         "ORDER BY a.user_id DESC";
 
         // Account have balance >= 200
-        @Query(mQueryPushPromotion)
+        @Query(value = mQueryPushPromotion, nativeQuery = true)
         List<String> pushPromotionNotification();
 
         String mQueryPushAll = "SELECT a.user_id, a.full_name, a.notification_token, " +
@@ -25,6 +25,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                         "ON a.user_id=b.account_user_id " +
                         "ORDER BY a.user_id DESC";
 
-        @Query(mQueryPushAll)
+        @Query(value = mQueryPushAll, nativeQuery = true)
         List<Notification> pushAllNotification();
 }
