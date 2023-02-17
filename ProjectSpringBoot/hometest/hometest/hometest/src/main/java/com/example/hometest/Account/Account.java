@@ -22,7 +22,7 @@ public class Account {
 
     @NotNull
     @Min(value = 1)
-    @Column(name = "user_id", insertable = true, updatable = true)
+    @Column(name = "account_user_id", insertable = true, updatable = true)
     private long userId;
 
     @NotNull

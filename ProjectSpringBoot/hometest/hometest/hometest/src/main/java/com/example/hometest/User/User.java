@@ -23,7 +23,7 @@ public class User {
 
     @NotNull
     @Min(value = 1)
-    @Column(name = "id")
+    @Column(name = "user_id")
     private @Id long userId;
 
     @NotNull
