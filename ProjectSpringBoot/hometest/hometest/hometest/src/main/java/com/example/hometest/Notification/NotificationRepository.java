@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-        String mQueryPushPromotion = "SELECT DISTINCT a.notification_token " +
+        String mQueryPushPromotion = "SELECT a.notification_token " +
                         "FROM tbl_User a " +
                         "INNER JOIN tbl_Account b " +
                         "ON a.user_id=b.account_user_id " +
                         "AND b.account_balance>=200 " +
-                        "ORDER BY a.user_id DESC";
+                        "GROUP BY a.notification_token " +
+                        "ORDER BY a.user_id ";
 
         // Account have balance >= 200
         @Query(value = mQueryPushPromotion, nativeQuery = true)
