@@ -38,7 +38,7 @@ public class AccountController {
     public ResponseEntity<ResponseAccountDto> getAllAccounts(@PathVariable(name = "userId") long userId) {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
-            List<Account> listAccount = accountServiceImpl.getAllAccounts(userId)
+            List<Account> listAccount = accountServiceImpl.getByUserId(userId)
                     .stream()
                     .map(post -> modelMapper.map(post, Account.class))
                     .collect(Collectors.toList());
@@ -61,7 +61,7 @@ public class AccountController {
             @PathVariable(name = "accountNumber") int accountNumber) {
         ResponseAccountDto responseAccountDto = modelMapper.map(Response.class, ResponseAccountDto.class);
         try {
-            Account account = accountServiceImpl.getAccountByNumber(userId, accountNumber);
+            Account account = accountServiceImpl.getByUserIdAndAccountNumber(userId, accountNumber);
             if (account == null) {
                 throw new ResourceException("Account " + HttpStatus.NOT_FOUND.getReasonPhrase());
             } else {

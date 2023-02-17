@@ -20,7 +20,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAllAccounts(long UserId) {
+    public List<Account> getByUserId(long UserId) {
         try {
             // Check error field
             if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, UserId) || UserId < 1) {
@@ -40,7 +40,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByNumber(long UserId, long AccountNumber) {
+    public Account getByUserIdAndAccountNumber(long UserId, long AccountNumber) {
         try {
             // Check error field
             if (ResourceValid.ObjectIsError(ResourceValid.typeOBJECT.LONG, UserId) || UserId < 1) {

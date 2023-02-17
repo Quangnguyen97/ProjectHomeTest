@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface AccountService {
 
-    List<Account> getAllAccounts(long userId);
+    List<Account> getByUserId(long userId);
 
-    Account getAccountByNumber(long userId, long accountNumber);
+    Account getByUserIdAndAccountNumber(long userId, long accountNumber);
 
     Account saveAccount(long userId, Account account);
 

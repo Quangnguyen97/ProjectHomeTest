@@ -1,16 +1,16 @@
 package com.example.hometest.Notification;
 
-//import java.util.List;
+import java.util.List;
 
 public interface NotificationService {
 
-    // List<Notification> getAllUsers();
+    List<Notification> getByUserId(long userId);
 
-    // Notification getUserByUserId(long UserId);
+    Notification getByUserIdAndAccountNumber(long userId, long accountNumber);
 
-    // Notification saveUser(Notification user);
+    Notification saveNotification(long userId, Notification notification);
 
-    // Notification updateUser(Notification user, long UserId);
+    Notification updateNotification(long userId, Notification notification, long accountNumber);
 
-    // boolean deleteUser(long UserId);
+    boolean deleteNotification(long userId, long accountNumber);
 }
