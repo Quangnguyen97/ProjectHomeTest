@@ -2,6 +2,7 @@
     "java.compile.nullAnalysis.mode": "automatic",
     "cSpell.words": [
         "Authen",
+        "autoconfigure",
         "Configurer",
         "getaccount",
         "getuser",
@@ -14,6 +15,7 @@
         "quang",
         "Servlet",
         "setuser",
+        "springframework",
         "Userid"
     ],
     "java.configuration.updateBuildConfiguration": "automatic",
