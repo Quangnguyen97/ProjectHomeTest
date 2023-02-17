@@ -5,6 +5,7 @@ import jakarta.annotation.Generated;
 
 import com.example.hometest.Account.*;
 import com.example.hometest.User.*;
+import com.example.hometest.Notification.*;
 
 @Generated(value = "org.mapstruct.ap.MappingProcessor", date = "2021-03-11T19:21:44+0100", comments = "version: 1.4.2.Final, compiler: javac, environment: Java 13.0.2 (Oracle Corporation)")
 @Component
@@ -32,5 +33,19 @@ public class MapStructMapperImpl implements MapStructMapper {
         userDto.setPassword(user.getPassWord());
         userDto.setNotificationToken(user.getNotificationToken());
         return userDto;
+    }
+
+    @Override
+    public NotificationDto notificationDto(Notification notification) {
+        if (notification == null) {
+            return null;
+        }
+        NotificationDto notificationDto = new NotificationDto();
+        notificationDto.setUserId(notification.getUserId());
+        notificationDto.setFullName(notification.getFullName());
+        notificationDto.setNotificationToken(notification.getNotificationToken());
+        notificationDto.setAccountNumber(notification.getAccountNumber());
+        notificationDto.setAccountBalance(notification.getAccountBalance());
+        return notificationDto;
     }
 }

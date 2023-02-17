@@ -15,7 +15,9 @@ import com.example.hometest.Module.*;
 @ComponentScan(basePackages = { "com.example.hometest.Module" })
 @ComponentScan(basePackages = { "com.example.hometest.Account" })
 @ComponentScan(basePackages = { "com.example.hometest.User" })
+@ComponentScan(basePackages = { "com.example.hometest.Notification" })
 @ComponentScan(basePackages = { "com.example.hometest.MapStruct" })
+@ComponentScan(basePackages = { "com.example.hometest.Response" })
 @ComponentScan(basePackages = { "com.example.hometest.Controller" })
 
 public class HometestApplication {
