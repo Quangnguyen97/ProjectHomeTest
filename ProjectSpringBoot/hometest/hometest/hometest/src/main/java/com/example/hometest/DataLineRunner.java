@@ -31,9 +31,13 @@ public class DataLineRunner implements CommandLineRunner {
             userServiceImpl.saveUser(new User(2, "NGUYEN VAN B", "hash2", "token2"));
             userServiceImpl.saveUser(new User(3, "NGUYEN VAN C", "hash3", "token3"));
 
+            accountServiceImpl.saveAccount(1, new Account(1, 5, 50));
             accountServiceImpl.saveAccount(1, new Account(1, 10, 100));
-            accountServiceImpl.saveAccount(2, new Account(2, 20, 200));
-            accountServiceImpl.saveAccount(3, new Account(3, 30, 300));
+            accountServiceImpl.saveAccount(1, new Account(1, 20, 200));
+            accountServiceImpl.saveAccount(2, new Account(2, 30, 300));
+            accountServiceImpl.saveAccount(2, new Account(2, 40, 400));
+            accountServiceImpl.saveAccount(3, new Account(3, 50, 500));
+            accountServiceImpl.saveAccount(3, new Account(3, 60, 600));
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
         }
