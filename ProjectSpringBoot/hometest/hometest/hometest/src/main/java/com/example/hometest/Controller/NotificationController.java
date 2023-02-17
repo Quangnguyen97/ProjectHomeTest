@@ -34,25 +34,19 @@ public class NotificationController {
     public ResponseEntity<ResponseDto> pushPromotion() {
         ResponseDto ResponseDto = modelMapper.map(Response.class, ResponseDto.class);
         try {
-            List<Object> listObject = new ArrayList<Object>();
             List<String> listToken = notificationServiceImpl.pushPromotion();
-
             if (listToken.isEmpty()) {
                 throw new ResourceException("List token " + HttpStatus.NOT_FOUND.getReasonPhrase());
-            } else {
-                for (String Token : listToken) {
-                    listObject.add(Token);
-                }
-                if (listObject.isEmpty()) {
-                    throw new ResourceException("List token " + HttpStatus.NOT_FOUND.getReasonPhrase());
-                } else {
-                    ResponseDto = ResponseDto(ResponseDto, HttpStatus.OK.value(),
-                            HttpStatus.OK.getReasonPhrase(), "", listObject);
-                    return ResponseEntity.status(HttpStatus.OK).body(ResponseDto);
-                }
             }
+            List<Object> listObject = new ArrayList<Object>();
+            for (String Token : listToken) {
+                listObject.add(Token);
+            }
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.OK.value(),
+                    HttpStatus.OK.getReasonPhrase(), "", listObject);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseDto);
         } catch (Exception e) {
-            ResponseDto = ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
                     HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ResponseDto);
         }
@@ -62,25 +56,19 @@ public class NotificationController {
     public ResponseEntity<ResponseDto> pushAll() {
         ResponseDto ResponseDto = modelMapper.map(Response.class, ResponseDto.class);
         try {
-            List<Object> listObject = new ArrayList<Object>();
             List<Notification> listNotification = notificationServiceImpl.pushAll();
-
             if (listNotification.isEmpty()) {
                 throw new ResourceException("List notification " + HttpStatus.NOT_FOUND.getReasonPhrase());
-            } else {
-                for (Notification notification : listNotification) {
-                    listObject.add(notification);
-                }
-                if (listObject.isEmpty()) {
-                    throw new ResourceException("List notification " + HttpStatus.NOT_FOUND.getReasonPhrase());
-                } else {
-                    ResponseDto = ResponseDto(ResponseDto, HttpStatus.OK.value(),
-                            HttpStatus.OK.getReasonPhrase(), "", listObject);
-                    return ResponseEntity.status(HttpStatus.OK).body(ResponseDto);
-                }
             }
+            List<Object> listObject = new ArrayList<Object>();
+            for (Notification notification : listNotification) {
+                listObject.add(notification);
+            }
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.OK.value(),
+                    HttpStatus.OK.getReasonPhrase(), "", listObject);
+            return ResponseEntity.status(HttpStatus.OK).body(ResponseDto);
         } catch (Exception e) {
-            ResponseDto = ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
                     HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ResponseDto);
         }
@@ -91,26 +79,13 @@ public class NotificationController {
             HttpMessageNotReadableException exception) {
         ResponseDto ResponseDto = modelMapper.map(Response.class, ResponseDto.class);
         try {
-            ResponseDto = ResponseDto(ResponseDto, HttpStatus.BAD_REQUEST.value(),
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.BAD_REQUEST.value(),
                     HttpStatus.BAD_REQUEST.getReasonPhrase(), exception.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ResponseDto);
         } catch (Exception e) {
-            ResponseDto = ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
+            ResponseDto = ResourceResponse.ResponseDto(ResponseDto, HttpStatus.EXPECTATION_FAILED.value(),
                     HttpStatus.EXPECTATION_FAILED.getReasonPhrase(), e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(ResponseDto);
-        }
-    }
-
-    private ResponseDto ResponseDto(ResponseDto ResponseDto, int status, String description,
-            String message, List<Object> listToken) {
-        try {
-            ResponseDto.setStatus(status);
-            ResponseDto.setDescription(description);
-            ResponseDto.setMessage(message);
-            ResponseDto.setResponse(listToken);
-            return ResponseDto;
-        } catch (Exception e) {
-            throw new ResourceException();
         }
     }
 }

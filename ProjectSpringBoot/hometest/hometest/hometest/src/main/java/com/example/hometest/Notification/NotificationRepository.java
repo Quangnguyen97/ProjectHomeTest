@@ -23,7 +23,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
                         "FROM tbl_User a " +
                         "INNER JOIN tbl_Account b " +
                         "ON a.user_id=b.account_user_id " +
-                        "ORDER BY a.user_id DESC";
+                        "ORDER BY a.user_id ";
 
         @Query(value = mQueryPushAll, nativeQuery = true)
         List<Notification> pushAllNotification();
