@@ -14,7 +14,7 @@ public class ResourceResponse {
             ResponseDto.setResponse(listObject);
             return ResponseDto;
         } catch (Exception e) {
-            throw new ResourceException();
+            throw new ResourceException(e.getMessage());
         }
     }
 }
