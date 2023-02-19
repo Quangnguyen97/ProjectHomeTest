@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public ResponseEntity<ResponseDto> getAllResponseUsers() {
+    public ResponseEntity<ResponseDto> getAllUsers() {
         ResponseDto ResponseDto = modelMapper.map(Response.class, ResponseDto.class);
         try {
             List<User> listUser = userServiceImpl.getAllUsers()
