@@ -62,7 +62,7 @@ public class ResourceValid {
                 case FIELD:
                     return String.format("Request body is error with field %s", resourceName);
                 case DIFFERENT:
-                    return String.format("request body is different with field %s", resourceName);
+                    return String.format("Request body is different with field %s", resourceName);
                 case NOTEXISTED:
                     return String.format("Data does not exist with field %s", resourceName);
                 case EXISTED:
