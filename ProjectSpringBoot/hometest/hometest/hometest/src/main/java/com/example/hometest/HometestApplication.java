@@ -5,8 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.example.hometest.Module.*;
 
@@ -26,16 +24,6 @@ public class HometestApplication {
 		return new ModelMapper();
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080").allowedMethods("*");
-			}
-		};
-	}
-
 	public static void main(String[] args) {
 		try {
 			SpringApplication.run(HometestApplication.class, args);
@@ -43,5 +31,4 @@ public class HometestApplication {
 			throw new ResourceException(e.getMessage());
 		}
 	}
-
 }

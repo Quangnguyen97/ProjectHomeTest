@@ -4,6 +4,7 @@
         "Authen",
         "autoconfigure",
         "Configurer",
+        "Exposable",
         "getaccount",
         "getuser",
         "Gson",
