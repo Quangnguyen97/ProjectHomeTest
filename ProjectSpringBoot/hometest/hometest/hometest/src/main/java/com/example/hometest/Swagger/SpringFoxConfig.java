@@ -5,6 +5,7 @@ import com.example.hometest.Module.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.web.server.ManagementPortType;
@@ -38,6 +39,14 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Component
 public class SpringFoxConfig {
+
+    @Bean
+    public GroupedOpenApi httpApi() {
+        return GroupedOpenApi.builder()
+                .group("http")
+                .pathsToMatch("/**")
+                .build();
+    }
 
     @Bean
     public Docket api() {
