@@ -19,6 +19,7 @@ import com.example.hometest.Module.*;
 @ComponentScan(basePackages = { "com.example.hometest.Controller" })
 @ComponentScan(basePackages = { "com.example.hometest.Swagger" })
 public class HometestApplication {
+
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
