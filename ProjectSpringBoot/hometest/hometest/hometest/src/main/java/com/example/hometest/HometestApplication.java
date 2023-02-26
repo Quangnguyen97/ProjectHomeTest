@@ -5,7 +5,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.example.hometest.Module.*;
 
@@ -19,7 +18,6 @@ import com.example.hometest.Module.*;
 @ComponentScan(basePackages = { "com.example.hometest.Response" })
 @ComponentScan(basePackages = { "com.example.hometest.Controller" })
 @ComponentScan(basePackages = { "com.example.hometest.Swagger" })
-@EnableWebMvc
 public class HometestApplication {
 	@Bean
 	public ModelMapper modelMapper() {

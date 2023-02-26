@@ -3,7 +3,6 @@ package com.example.hometest.Swagger;
 import com.example.hometest.Module.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
@@ -13,7 +12,6 @@ import org.springframework.boot.actuate.endpoint.ExposableEndpoint;
 import org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver;
 import org.springframework.boot.actuate.endpoint.web.EndpointMapping;
 import org.springframework.boot.actuate.endpoint.web.EndpointMediaTypes;
-import org.springframework.boot.actuate.endpoint.web.ExposableWebEndpoint;
 import org.springframework.boot.actuate.endpoint.web.WebEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.annotation.ControllerEndpointsSupplier;
 import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpointsSupplier;
@@ -68,12 +66,17 @@ public class SpringFoxConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080").allowedMethods("");
-            }
-        };
+        try {
+            return new WebMvcConfigurer() {
+                @Override
+                public void addCorsMappings(CorsRegistry registry) {
+                    registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080")
+                            .allowedMethods("");
+                }
+            };
+        } catch (Exception e) {
+            throw new ResourceException(e.getMessage());
+        }
     }
 
     @Bean
@@ -82,27 +85,33 @@ public class SpringFoxConfig {
             ControllerEndpointsSupplier controllerEndpointsSupplier,
             EndpointMediaTypes endpointMediaTypes, CorsEndpointProperties corsProperties,
             WebEndpointProperties webEndpointProperties, Environment environment) {
-        List<ExposableEndpoint<?>> allEndpoints = new ArrayList<ExposableEndpoint<?>>();
-        Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
-        allEndpoints.addAll(webEndpoints);
-        allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
-        allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
-        String basePath = webEndpointProperties.getBasePath();
-        EndpointMapping endpointMapping = new EndpointMapping(basePath);
-        boolean shouldRegisterLinksMapping = this.shouldRegisterLinksMapping(webEndpointProperties, environment,
-                basePath);
-        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints,
-                endpointMediaTypes,
-                corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints,
-                        basePath),
-                shouldRegisterLinksMapping);
+        try {
+            List<ExposableEndpoint<?>> allEndpoints = new ArrayList<ExposableEndpoint<?>>();
+            allEndpoints.addAll(webEndpointsSupplier.getEndpoints());
+            allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
+            allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
+            return new WebMvcEndpointHandlerMapping(new EndpointMapping(webEndpointProperties.getBasePath()),
+                    webEndpointsSupplier.getEndpoints(),
+                    endpointMediaTypes,
+                    corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints,
+                            webEndpointProperties.getBasePath()),
+                    this.shouldRegisterLinksMapping(webEndpointProperties, environment,
+                            webEndpointProperties.getBasePath()));
+        } catch (Exception e) {
+            throw new ResourceException(e.getMessage());
+        }
     }
 
     private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties, Environment environment,
             String basePath) {
-        return webEndpointProperties.getDiscovery().isEnabled() &&
-                (StringUtils.hasText(basePath)
-                        || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+        try {
+            return webEndpointProperties.getDiscovery().isEnabled() &&
+                    (StringUtils.hasText(basePath)
+                            || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
+        } catch (Exception e) {
+            throw new ResourceException(e.getMessage());
+        }
+
     }
 
 }
