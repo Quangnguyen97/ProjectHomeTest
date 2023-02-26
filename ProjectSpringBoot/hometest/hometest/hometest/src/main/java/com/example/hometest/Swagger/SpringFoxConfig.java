@@ -55,8 +55,8 @@ public class SpringFoxConfig {
                     .enable(true)
                     .apiInfo(this.apiInfo())
                     .select()
-                    .apis(RequestHandlerSelectors.basePackage("com.example.hometest.Controller"))
                     .paths(PathSelectors.any())
+                    .apis(RequestHandlerSelectors.basePackage("com.example.hometest.Controller"))
                     .build();
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
@@ -120,7 +120,5 @@ public class SpringFoxConfig {
         } catch (Exception e) {
             throw new ResourceException(e.getMessage());
         }
-
     }
-
 }
